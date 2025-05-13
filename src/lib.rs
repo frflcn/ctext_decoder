@@ -7,6 +7,9 @@ use crate::decode_block::DecodeBlock;
 mod charset;
 mod decode_block;
 
+#[cfg(test)]
+mod tests;
+
 //Start Escape Sequence
 const ESC: u8 = 27;
 
