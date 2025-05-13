@@ -21,16 +21,7 @@ pub enum Charset {
 }
 
 impl Charset {
-    // fn is_non_ascii_yet_ascii_compatible(charset: Charset) -> bool{
-    //     match charset {
-    //         Charset::Ascii | Charset::JisX0201L | Charset::JisX0201R => {
-    //             return false;
-    //         }
-    //         _ => {
-    //             return true;
-    //         }
-    //     }
-    // }
+
     pub fn is_non_ascii_yet_ascii_compatible(&self) -> bool {
         match self {
             Charset::Ascii | Charset::JisX0201L | Charset::JisX0201R => {
@@ -39,18 +30,6 @@ impl Charset {
             _ => {
                 return true;
             }
-        }
-    }
-
-    pub fn is_natural_left(&self) -> bool {
-        match self {
-            Charset::Ascii | Charset::JisX0201L => {
-                return true;
-            }
-            _ => {
-                return false;
-            }
-
         }
     }
 
