@@ -1,13 +1,13 @@
-use std::slice::Windows;
-use std::str::{Chars, FromStr};
-//use encoding_rs::{WINDOWS_1252, EUC_JP, EUC_KR, GBK, SHIFT_JIS, ISO_8859_2, ISO_8859_3, ISO_8859_4, ISO_8859_5, ISO_8859_6, ISO_8859_7, ISO_8859_8, ISO_8859_9};
-use encoding_rs::Encoding;
-use encoding_rs as enc;
+use std::char::REPLACEMENT_CHARACTER;
+
+
 use crate::charset::Charset;
 use crate::decode_block::DecodeBlock;
+pub use crate::encoder::Encoder;
 
 mod charset;
 mod decode_block;
+mod encoder;
 
 //Start Escape Sequence
 const ESC: u8 = 27;
@@ -45,20 +45,9 @@ const KS_C5601: u8 = 67;
 const UTF8_STANDARD_RETURN: u8 = 71;
 const STANDARD_RETURN: u8 = 64;
 
-pub struct Encoder {
 
-}
 
-impl Encoder {
 
-    pub fn encode(string: String) -> Vec<u8> {
-        Vec::new()
-    }
-
-    pub fn hello() -> String {
-        String::from_str("Hello From Ctext_decoder").unwrap()
-    }
-}
 
 
 struct Decoder {
@@ -93,57 +82,86 @@ impl Decoder {
 
 
 
-pub fn decode(bytes: &Vec<u8>) -> String {
-    //println!("Hello from dec");
-    println!("BYTES: {:?}", bytes);
+pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
+
     let mut decode_block = DecodeBlock::new();
     let mut decoded_string = String::with_capacity(150);
 
     let mut start_index: usize = 0;
+    let mut replacement_char_added = false;
+    fn assign_right(result: Result<Charset, &'static str>, decoded_string: &mut String, decode_block: &mut DecodeBlock, replacement_char_added: &mut bool) {
+        match result {
+            Ok(charset) => {
+                decode_block.assign_right(charset);
+            },
+            Err(_) => {
+                decoded_string.push(REPLACEMENT_CHARACTER);
+                *replacement_char_added = true;
+            }
+        }
+    }
+    fn assign_left(result: Result<Charset, &'static str>, decoded_string: &mut String, decode_block: &mut DecodeBlock, replacement_char_added: &mut bool) {
+        match result {
+            Ok(charset) => {
+                decode_block.assign_left(charset);
+            },
+            Err(_) => {
+                decoded_string.push(REPLACEMENT_CHARACTER);
+                *replacement_char_added = true;
+            }
+        }
+    }
+    
 
     
     let mut byte_index: usize = 0;
     while byte_index < bytes.len() {
         if bytes[byte_index] == ESC {
-            // println!("BYTE INDEX {}", byte_index);
-            // println!("BYTES {:?}", &bytes[start..byte_index]);
+
             decode_block.decode(&bytes[start_index..byte_index], &mut decoded_string);
 
             if bytes.len() - byte_index <= 2 {
-                return decoded_string;
+                return (decoded_string, replacement_char_added);
             }
-            // return decoded_string;
+
             byte_index += 1;
             match bytes[byte_index] {
                 GL_94 => {
                     byte_index += 1;
-                    decode_block.assign_left(match_94(bytes[byte_index]));
+                    let result = match_94(bytes[byte_index]);
+                    assign_left(result, &mut decoded_string, &mut decode_block, &mut replacement_char_added);
                 }
                 GR_94 => {
                     byte_index += 1;
-                    decode_block.assign_right(match_94(bytes[byte_index]));
+                    let result = match_94(bytes[byte_index]);
+                    assign_right(result, &mut decoded_string, &mut decode_block, &mut replacement_char_added);
                 }
 
                 GR_96 => {
                     byte_index += 1;
-                    decode_block.assign_right(match_96(bytes[byte_index]));
+                    let result = match_96(bytes[byte_index]);
+                    assign_right(result, &mut decoded_string, &mut decode_block, &mut replacement_char_added); 
+                    
                 }
                 G_94N => {
                     if bytes.len() - byte_index <= 2 {
-                        return decoded_string;
+                        return (decoded_string, replacement_char_added);
                     }
                     byte_index += 1;
                     match bytes[byte_index] {
                         GL_94N => {
                             byte_index += 1;
-                            decode_block.assign_left(match_94n(bytes[byte_index]));
+                            let result =match_94n(bytes[byte_index]);
+                            assign_left(result, &mut decoded_string, &mut decode_block, &mut replacement_char_added);
                         }
                         GR_94N => {
                             byte_index += 1;
-                            decode_block.assign_right(match_94n(bytes[byte_index]));
+                            let result = match_94n(bytes[byte_index]);
+                            assign_right(result, &mut decoded_string, &mut decode_block, &mut replacement_char_added);
                         }
                         _ => {
-                            panic!("Unrecognized GR or GL Specifier for 94N");
+                            decoded_string.push(REPLACEMENT_CHARACTER);
+                            replacement_char_added = true;
                         }
                     }
                 }   
@@ -157,12 +175,14 @@ pub fn decode(bytes: &Vec<u8>) -> String {
                             decode_block.is_utf8 = false;
                         }
                         _ => {
-                            panic!("Unrecognized switch encoding specifier");
+                            decoded_string.push(REPLACEMENT_CHARACTER);
+                            replacement_char_added = true;
                         }
                     }
                 }
                 _ => {
-                    panic!("Unrecognized specifier after ESC");
+                    decoded_string.push(REPLACEMENT_CHARACTER);
+                    replacement_char_added = true;
                 }
 
             }
@@ -171,72 +191,78 @@ pub fn decode(bytes: &Vec<u8>) -> String {
         byte_index += 1;
     }
     decode_block.decode(&bytes[start_index..], &mut decoded_string);
-    decoded_string
+    
+    return (decoded_string, replacement_char_added);
 }
 
-fn match_96(byte: u8) -> Charset {
+fn match_96(byte: u8) -> Result<Charset, &'static str> {
     match byte {
         ISO_8859_1 => {
-            Charset::Iso8859_1
+            Ok(Charset::Iso8859_1)
         }
         ISO_8859_2 => {
-            Charset::Iso8859_2
+            Ok(Charset::Iso8859_2)
         }
         ISO_8859_3 => {
-            Charset::Iso8859_3
+            Ok(Charset::Iso8859_3)
         }
         ISO_8859_4 => {
-            Charset::Iso8859_4
+            Ok(Charset::Iso8859_4)
         }
         ISO_8859_5 => {
-            Charset::Iso8859_5
+            Ok(Charset::Iso8859_5)
         }
         ISO_8859_6 => {
-            Charset::Iso8859_6
+            Ok(Charset::Iso8859_6)
         }
         ISO_8859_7 => {
-            Charset::Iso8859_7
+            Ok(Charset::Iso8859_7)
         }
         ISO_8859_8 => {
-            Charset::Iso8859_8
+            Ok(Charset::Iso8859_8)
         }
         ISO_8859_9 => {
-            Charset::Iso8859_9
+            Ok(Charset::Iso8859_9)
         }
-        _ => {panic!("Unrecognized 96 character charset");}
+        _ => {
+            Err("No matching 96 character Charset")
+        }
     }
 }
 
-fn match_94n (byte: u8) -> Charset {
+fn match_94n (byte: u8) -> Result<Charset, &'static str> {
     match byte {
         GB2312 => {
-            Charset::GB2312
+            Ok(Charset::GB2312)
         }
         JIS_X0208 => {
-            Charset::JisX0208
+            Ok(Charset::JisX0208)
         }
         KS_C5601 => {
-            Charset::KSC5601
+            Ok(Charset::KSC5601)
         }
         _ => {
-            panic!("Unrecognized 94N character charset");
+            //panic!("Unrecognized 94N character charset");
+            Err("No matching 94N character Charset")
         }
+        
     }
 }
 
-fn match_94(byte: u8) -> Charset {
+fn match_94(byte: u8) -> Result<Charset, &'static str> {
     match byte {
         ASCII => {
-            Charset::Ascii
+            Ok(Charset::Ascii)
         }
         JIS_X0201_L => {
-            Charset::JisX0201L
+            Ok(Charset::JisX0201L)
         }
         JIS_X0201_R => {
-            Charset::JisX0201R
+            Ok(Charset::JisX0201R)
         }
         _ => {
-            panic!("Unrecognized 94 character charset");
+            //panic!("Unrecognized 94 character charset");
+            Err("No matching 94 character Charset")
         }
     }
 }
