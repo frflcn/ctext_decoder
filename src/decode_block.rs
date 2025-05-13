@@ -31,15 +31,18 @@ impl DecodeBlock {
         }
     }
 
-    fn decode_single_decoder(encoding: &'static enc::Encoding, bytes: &[u8], string: &mut String) {
-        let output = encoding.decode_without_bom_handling(bytes);
+    fn decode_single_decoder(encoding: &'static enc::Encoding, bytes: &[u8], string: &mut String) -> bool {
+        let (decoded_string, replacement_character_added) = encoding.decode_without_bom_handling(bytes);
         //TODO: Check if replacement characters were added
-        string.push_str(output.0.as_ref());
+        string.push_str(&decoded_string);
+        replacement_character_added
     }
 
-    pub fn decode(&mut self, bytes: &[u8], string: &mut String) {
+    pub fn decode(&mut self, bytes: &[u8], string: &mut String) -> bool {
         if self.is_utf8 {
-            return string.push_str(String::from_utf8_lossy(bytes).as_ref());
+            let (decoded_string, replacement_character_added) = enc::UTF_8.decode_without_bom_handling(bytes);
+            string.push_str(&decoded_string);
+            return replacement_character_added;
         }
         else if self.is_single_decoder {
             let encoding;
@@ -90,6 +93,7 @@ impl DecodeBlock {
             return DecodeBlock::decode_single_decoder(encoding, bytes, string);
         }
         else {
+            let mut replacement_character_added = false;
             let mut flipped_bytes: Vec<u8> = Vec::with_capacity(bytes.len()); 
             let flip_right_operator = if self.flip_right { 128u8 } else { 0u8 };
             let flip_left_operator = if self.flip_right { 128u8 } else { 0u8 };
@@ -97,30 +101,34 @@ impl DecodeBlock {
             let left_encoding = self.left_charset.get_encoding();
             let mut byte_index = 0;
             let mut start_index = 0;
-            //let mut is_right = bytes[byte_index] & 128u8 == 128u8;
-            //byte_index += 1;
-            let mut output;
+            let (mut decoded_string, mut replacement_character_added_temp);
+
             while byte_index < bytes.len() {
                 while bytes[byte_index] & 128u8 == 128u8 {
                     flipped_bytes[byte_index] = bytes[byte_index] ^ flip_right_operator;
                     byte_index += 1;
                 }
-                output = right_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
 
-                //TODO: Check if replacement characters were added
-                string.push_str(output.0.as_ref());
+                (decoded_string, replacement_character_added_temp) = right_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
+                replacement_character_added = if replacement_character_added_temp { true } else { replacement_character_added };
+
+                string.push_str(&decoded_string);
                 start_index = byte_index;
 
+
+                
                 while bytes[byte_index] & 128u8 == 0u8 {
                     flipped_bytes[byte_index] = bytes[byte_index] ^ flip_left_operator;
                     byte_index += 1;
                 }
-                output = left_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
 
-                //TODO: Check if replacement characters were added
-                string.push_str(output.0.as_ref());
+                (decoded_string, replacement_character_added_temp) = left_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
+                replacement_character_added = if replacement_character_added_temp { true } else { replacement_character_added };
+
+                string.push_str(&decoded_string);
                 start_index = byte_index;
-            }
+            };
+            return replacement_character_added;
         }
     }
 
