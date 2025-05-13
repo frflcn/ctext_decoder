@@ -3,12 +3,9 @@ use std::char::REPLACEMENT_CHARACTER;
 
 use crate::charset::Charset;
 use crate::decode_block::DecodeBlock;
-pub use crate::encoder::Encoder;
 
 mod charset;
 mod decode_block;
-mod encoder;
-mod decoder;
 
 //Start Escape Sequence
 const ESC: u8 = 27;
