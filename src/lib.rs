@@ -118,7 +118,9 @@ pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
     while byte_index < bytes.len() {
         if bytes[byte_index] == ESC {
 
-            decode_block.decode(&bytes[start_index..byte_index], &mut decoded_string);
+            if decode_block.decode(&bytes[start_index..byte_index], &mut decoded_string) {
+                replacement_char_added = true;
+            }
 
             if bytes.len() - byte_index <= 2 {
                 return (decoded_string, replacement_char_added);
@@ -190,7 +192,9 @@ pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
         }
         byte_index += 1;
     }
-    decode_block.decode(&bytes[start_index..], &mut decoded_string);
+    if decode_block.decode(&bytes[start_index..], &mut decoded_string) {
+        replacement_char_added = true;
+    }
     
     return (decoded_string, replacement_char_added);
 }
