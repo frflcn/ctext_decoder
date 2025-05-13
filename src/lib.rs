@@ -53,7 +53,7 @@ const STANDARD_RETURN: u8 = 64;
 pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
 
     let mut decode_block = DecodeBlock::new();
-    let mut decoded_string = String::with_capacity(150);
+    let mut decoded_string = String::with_capacity(bytes.len() * 4);
 
     let mut start_index: usize = 0;
     let mut replacement_char_added = false;
@@ -91,6 +91,7 @@ pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
             }
 
             if bytes.len() - byte_index <= 2 {
+                decoded_string.shrink_to_fit();
                 return (decoded_string, replacement_char_added);
             }
 
@@ -115,6 +116,7 @@ pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
                 }
                 G_94N => {
                     if bytes.len() - byte_index <= 2 {
+                        decoded_string.shrink_to_fit();
                         return (decoded_string, replacement_char_added);
                     }
                     byte_index += 1;
@@ -163,7 +165,7 @@ pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
     if decode_block.decode(&bytes[start_index..], &mut decoded_string) {
         replacement_char_added = true;
     }
-    
+    decoded_string.shrink_to_fit();
     return (decoded_string, replacement_char_added);
 }
 
