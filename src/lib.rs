@@ -57,11 +57,14 @@ const KS_C5601: u8 = 67;
 const UTF8_STANDARD_RETURN: u8 = 71;
 const STANDARD_RETURN: u8 = 64;
 
+pub struct DecodeWithReplacementResult {
+    pub text: String,
+    pub replacement_added: bool
+}
 
 
 
-
-pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
+pub fn decode_with_replacement(bytes: &Vec<u8>) -> DecodeWithReplacementResult {
 
     let mut decode_block = DecodeBlock::new();
     let mut decoded_string = String::with_capacity(bytes.len() * 4);
@@ -103,7 +106,10 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
 
             if bytes.len() - byte_index <= 2 {
                 decoded_string.shrink_to_fit();
-                return (decoded_string, replacement_char_added);
+                return DecodeWithReplacementResult {
+                    text: decoded_string,
+                    replacement_added: replacement_char_added
+                };
             }
 
             byte_index += 1;
@@ -128,7 +134,10 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
                 G_94N => {
                     if bytes.len() - byte_index <= 2 {
                         decoded_string.shrink_to_fit();
-                        return (decoded_string, replacement_char_added);
+                        return DecodeWithReplacementResult {
+                            text: decoded_string,
+                            replacement_added: replacement_char_added
+                        };
                     }
                     byte_index += 1;
                     match bytes[byte_index] {
@@ -178,14 +187,20 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
             byte_index += 1;
             if byte_index >= bytes.len() {
                 decoded_string.shrink_to_fit();
-                return (decoded_string, replacement_char_added);
+                return DecodeWithReplacementResult {
+                    text: decoded_string,
+                    replacement_added: replacement_char_added
+                };
             }
             match bytes[byte_index] {
                 LEFT_TO_RIGHT => {
                     byte_index += 1;
                     if byte_index >= bytes.len(){
                         decoded_string.shrink_to_fit();
-                        return (decoded_string, replacement_char_added);
+                        return DecodeWithReplacementResult {
+                            text: decoded_string,
+                            replacement_added: replacement_char_added
+                        };
                     }
                     else if bytes[byte_index] == END_BIDI {
                         decoded_string.push(LRE_UNICODE)
@@ -199,7 +214,10 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
                     byte_index += 1;
                     if byte_index >= bytes.len(){
                         decoded_string.shrink_to_fit();
-                        return (decoded_string, replacement_char_added);
+                        return DecodeWithReplacementResult {
+                            text: decoded_string,
+                            replacement_added: replacement_char_added
+                        };
                     }
                     else if bytes[byte_index] == END_BIDI {
                         decoded_string.push(RLE_UNICODE)
@@ -224,7 +242,10 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
         replacement_char_added = true;
     }
     decoded_string.shrink_to_fit();
-    return (decoded_string, replacement_char_added);
+    return DecodeWithReplacementResult {
+        text: decoded_string,
+        replacement_added: replacement_char_added
+    };
 }
 
 fn match_96(byte: u8) -> Result<Charset, &'static str> {
