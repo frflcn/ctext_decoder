@@ -15,6 +15,15 @@ mod tests;
 //Start Escape Sequence
 const ESC: u8 = 27;
 
+//Bidi
+const CSI: u8 = 0x9B;
+const LEFT_TO_RIGHT: u8 = 0x31;
+const RIGHT_TO_LEFT: u8 = 0x32;
+const END_BIDI: u8 = 0x5D;
+
+const LRE_UNICODE: char = char::from_u32(0x202A).unwrap();
+const RLE_UNICODE: char = char::from_u32(0x202B).unwrap();
+const PDF_UNICODE: char = char::from_u32(0x202C).unwrap();
 
 //First byte of Escape Sequence
 const GL_94: u8 = 40;
@@ -161,6 +170,53 @@ pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
 
             }
             start_index = byte_index + 1;
+        }
+        else if bytes[byte_index] == CSI {
+            if decode_block.decode(&bytes[start_index..byte_index], &mut decoded_string) {
+                replacement_char_added = true;
+            }
+            byte_index += 1;
+            if byte_index >= bytes.len() {
+                decoded_string.shrink_to_fit();
+                return (decoded_string, replacement_char_added);
+            }
+            match bytes[byte_index] {
+                LEFT_TO_RIGHT => {
+                    byte_index += 1;
+                    if byte_index >= bytes.len(){
+                        decoded_string.shrink_to_fit();
+                        return (decoded_string, replacement_char_added);
+                    }
+                    else if bytes[byte_index] == END_BIDI {
+                        decoded_string.push(LRE_UNICODE)
+                    }
+                    else {
+                        decoded_string.push(REPLACEMENT_CHARACTER);
+                        replacement_char_added = true;
+                    }
+                }
+                RIGHT_TO_LEFT => {
+                    byte_index += 1;
+                    if byte_index >= bytes.len(){
+                        decoded_string.shrink_to_fit();
+                        return (decoded_string, replacement_char_added);
+                    }
+                    else if bytes[byte_index] == END_BIDI {
+                        decoded_string.push(RLE_UNICODE)
+                    }
+                    else {
+                        decoded_string.push(REPLACEMENT_CHARACTER);
+                        replacement_char_added = true;
+                    }
+                }
+                END_BIDI => {
+                    decoded_string.push(PDF_UNICODE)
+                }
+                _ => {
+                    decoded_string.push(REPLACEMENT_CHARACTER);
+                    replacement_char_added = true;
+                }
+            }
         }
         byte_index += 1;
     }
