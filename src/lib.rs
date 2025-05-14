@@ -52,7 +52,7 @@ const STANDARD_RETURN: u8 = 64;
 
 
 
-pub fn decode(bytes: &Vec<u8>) -> (String, bool) {
+pub fn decode_with_replacement(bytes: &Vec<u8>) -> (String, bool) {
 
     let mut decode_block = DecodeBlock::new();
     let mut decoded_string = String::with_capacity(bytes.len() * 4);
