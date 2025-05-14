@@ -1,8 +1,11 @@
-use super::gb_2312::GB_2312;
-use super::ks_c5601::KS_C5601;
-use super::jis_x0208::JIS_X0208;
-use super::jis_x0201::JIS_X0201;
-use super::iso_8859::{ISO_8859_1, ISO_8859_2, ISO_8859_3, ISO_8859_4, ISO_8859_5, ISO_8859_6, ISO_8859_7, ISO_8859_8, ISO_8859_9};
+use super::GB_2312;
+use super::KS_C5601;
+use super::JIS_X0208;
+use super::JIS_X0201;
+use super::{ISO_8859_1, ISO_8859_2, ISO_8859_3, ISO_8859_4, ISO_8859_5, ISO_8859_6, ISO_8859_7, ISO_8859_8, ISO_8859_9};
+
+const SINGLE_BYTE_CHARSETS: [[u32; 256]; 10] = [JIS_X0201, ISO_8859_1, ISO_8859_2, ISO_8859_3, ISO_8859_4, ISO_8859_5, ISO_8859_6, ISO_8859_7, ISO_8859_8, ISO_8859_9];
+const DOUBLE_BYTE_CHARSETS: [[[u32; 94]; 94]; 3] = [JIS_X0208, GB_2312, KS_C5601];
 
 #[test]
 fn test_gbk() {
@@ -133,4 +136,20 @@ fn test_iso_8859_9() {
     //assert_eq!(ISO_8859_9[234], 234); 
     assert_eq!(ISO_8859_9[198], 198);
     assert_eq!(ISO_8859_9[221], 304);
+}
+
+#[test]
+fn test_from_u32_unchecked_is_safe() {
+    for charset in SINGLE_BYTE_CHARSETS {
+        for chr in charset {
+            unsafe { let _ = std::char::from_u32_unchecked(chr); }
+        }
+    }
+    for charset in DOUBLE_BYTE_CHARSETS {
+        for page in charset {
+            for chr in page {
+                unsafe { let _ = std::char::from_u32_unchecked(chr); }
+            }
+        }
+    }
 }

@@ -1,5 +1,8 @@
 use crate::Charset;
-use encoding_rs as enc;
+use crate::encoding::{Encoding, GB_2312, JIS_X0201, JIS_X0208, KS_C5601, UTF8};
+use crate::encoding::{ISO_8859_1, ISO_8859_2, ISO_8859_3};
+use crate::encoding::{ISO_8859_4, ISO_8859_5, ISO_8859_6};
+use crate::encoding::{ISO_8859_7, ISO_8859_8, ISO_8859_9};
 
 pub struct DecodeBlock {
 
@@ -31,60 +34,55 @@ impl DecodeBlock {
         }
     }
 
-    fn decode_single_decoder(encoding: &'static enc::Encoding, bytes: &[u8], string: &mut String) -> bool {
-        let (decoded_string, replacement_character_added) = encoding.decode_without_bom_handling(bytes);
-        //TODO: Check if replacement characters were added
-        string.push_str(&decoded_string);
-        replacement_character_added
+    fn decode_single_decoder(encoding: Box<&dyn Encoding>, bytes: &[u8], string: &mut String) -> bool {
+        encoding.decode(bytes, string)
     }
 
     pub fn decode(&mut self, bytes: &[u8], string: &mut String) -> bool {
         if self.is_utf8 {
-            let (decoded_string, replacement_character_added) = enc::UTF_8.decode_without_bom_handling(bytes);
-            string.push_str(&decoded_string);
-            return replacement_character_added;
+            return UTF8.decode(bytes, string);
         }
         else if self.is_single_decoder {
-            let encoding;
+            let encoding: Box<&dyn Encoding>;
             match self.right_charset {
                 Charset::JisX0201R => {
-                    encoding = enc::SHIFT_JIS;
+                    encoding = Box::new(&JIS_X0201);
                 }
                 Charset::Iso8859_1 => {
-                    encoding = enc::WINDOWS_1252;
+                    encoding = Box::new(&ISO_8859_1);
                 }
                 Charset::Iso8859_2 => {
-                    encoding = enc::ISO_8859_2;
+                    encoding = Box::new(&ISO_8859_2);
                 }
                 Charset::Iso8859_3 => {
-                    encoding = enc::ISO_8859_3;
+                    encoding = Box::new(&ISO_8859_3);
                 }
                 Charset::Iso8859_4 => {
-                    encoding = enc::ISO_8859_4;
+                    encoding = Box::new(&ISO_8859_4);
                 }
                 Charset::Iso8859_5 => {
-                    encoding = enc::ISO_8859_5;
+                    encoding = Box::new(&ISO_8859_5);
                 }
                 Charset::Iso8859_6 => {
-                    encoding = enc::ISO_8859_6;
+                    encoding = Box::new(&ISO_8859_6);
                 }
                 Charset::Iso8859_7 => {
-                    encoding = enc::ISO_8859_7;
+                    encoding = Box::new(&ISO_8859_7);
                 }
                 Charset::Iso8859_8 => {
-                    encoding = enc::ISO_8859_8;
+                    encoding = Box::new(&ISO_8859_8);
                 }
                 Charset::Iso8859_9 => {
-                    encoding = enc::WINDOWS_1254;
+                    encoding = Box::new(&ISO_8859_9);
                 }
                 Charset::KSC5601 => {
-                    encoding = enc::EUC_KR;
+                    encoding = Box::new(&KS_C5601);
                 }
                 Charset::JisX0208 => {
-                    encoding = enc::EUC_JP;
+                    encoding = Box::new(&JIS_X0208);
                 }
                 Charset::GB2312 => {
-                    encoding = enc::GBK;
+                    encoding = Box::new(&GB_2312);
                 }
                 _ => {
                     unreachable!("Ascii or Jisx0201L in the right graphic and single decoder is true")
@@ -101,7 +99,7 @@ impl DecodeBlock {
             let left_encoding = self.left_charset.get_encoding();
             let mut byte_index = 0;
             let mut start_index = 0;
-            let (mut decoded_string, mut replacement_character_added_temp);
+            let mut replacement_character_added_temp;
 
             while byte_index < bytes.len() {
                 while bytes[byte_index] & 128u8 == 128u8 {
@@ -109,10 +107,10 @@ impl DecodeBlock {
                     byte_index += 1;
                 }
 
-                (decoded_string, replacement_character_added_temp) = right_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
+                replacement_character_added_temp = right_encoding.decode(&flipped_bytes[start_index..byte_index], string);
                 replacement_character_added = if replacement_character_added_temp { true } else { replacement_character_added };
 
-                string.push_str(&decoded_string);
+   
                 start_index = byte_index;
 
 
@@ -122,10 +120,9 @@ impl DecodeBlock {
                     byte_index += 1;
                 }
 
-                (decoded_string, replacement_character_added_temp) = left_encoding.decode_without_bom_handling(&flipped_bytes[start_index..byte_index]);
+                replacement_character_added_temp = left_encoding.decode(&flipped_bytes[start_index..byte_index], string);
                 replacement_character_added = if replacement_character_added_temp { true } else { replacement_character_added };
 
-                string.push_str(&decoded_string);
                 start_index = byte_index;
             };
             return replacement_character_added;
