@@ -218,7 +218,6 @@ fn match_94n (byte: u8) -> Result<Charset, &'static str> {
             Ok(Charset::KSC5601)
         }
         _ => {
-            //panic!("Unrecognized 94N character charset");
             Err("No matching 94N character Charset")
         }
         
@@ -237,7 +236,6 @@ fn match_94(byte: u8) -> Result<Charset, &'static str> {
             Ok(Charset::JisX0201R)
         }
         _ => {
-            //panic!("Unrecognized 94 character charset");
             Err("No matching 94 character Charset")
         }
     }
