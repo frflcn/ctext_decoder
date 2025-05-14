@@ -22,7 +22,8 @@ fn test_jis_x0208() {
     assert_eq!(JIS_X0208[20][8], 31232)
 }
 
-//NOTE: Uses full width instead of half width characters
+// NOTE: Uses full width instead of half width characters
+// Wikipedia uses half width while https://www.rfc-editor.org/rfc/rfc1345.txt uses full width characters
 #[test]
 fn test_jis_x0201() {
     assert_eq!(JIS_X0201[92], 165);
