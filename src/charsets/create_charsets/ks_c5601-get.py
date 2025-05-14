@@ -51,3 +51,7 @@ file_directory = os.path.dirname(os.path.realpath(__file__))
 encoding_path = os.path.join(file_directory, "../ks_c5601.rs")
 with open(encoding_path, "w") as f:
     f.write(str(encoding_file))
+
+webpage_path = os.path.join(file_directory, "webpages/ks_c5601.txt")
+with open(webpage_path, "w") as f:
+    f.write(content)

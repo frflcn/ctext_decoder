@@ -83,3 +83,7 @@ file_string = file_string[:-2]
 
 with open(os.path.join(file_directory, file_name), "w") as f:
     f.write(file_string)
+
+webpage_path = os.path.join(file_directory, "webpages/jis_x0201.txt")
+with open(webpage_path, "w") as f:
+    f.write(content)

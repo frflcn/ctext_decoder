@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+<!-- Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Abstract" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Keywords" content="ICU, ICU4C, converter, conversion, charset, character set, codepage, encoding"/>
+<meta name="Robots" content="index,nofollow"/>
+<title>ICU Demonstration - Converter Explorer</title>
+<link rel="stylesheet" type="text/css" href="./icudemos/icu.css" />
+<link rel="stylesheet" type="text/css" href="./icudemos/main.css" />
+<link rel="SHORTCUT ICON" href="//www.icu-project.org/favicon.ico"/>
+<style type="text/css">
+/*<![CDATA[*/
+div.unicodeset {font-family: monospace; }
+span.autobr:after {font-family: monospace; content: "\00200B"; }
+table.data-table-2 { border-right: #000 solid 1px; border-bottom: #000 solid 1px; border-left: 0px; border-top: 0px; }
+table.data-table-2 td,
+table.data-table-2 th{ padding-left:3px; padding-right:3px; padding-top:3px; border-left: #000 solid 1px; border-top: #000 solid 1px; border-right: 0px; border-bottom: 0px; }
+table.data-table-2 caption {border-bottom:#fff solid 0px;}
+table.data-table-2 td.alias {white-space: nowrap;}
+table.data-table-2 td.reserved {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 td.continue {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 div.iso {margin-top: 0.2em; margin-bottom: 0.2em; border: solid; border-width: 1px; font-size: 100%; font-family: monospace;}
+table.data-table-2 div.glyph {font-size: 160%; font-family: initial;}
+/*]]>*/
+</style>
+</head>
+<body>
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+
+
+<!-- common masthead -->
+<!-- DEMO_BEGIN_LEFT_NAV -->
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006-2012, IBM and others. All Rights Reserved. -->
+<!-- 
+Note: All links need a target="_top" because of how the translit demo works.
+-->
+<h1 id='topbar'>
+  International Components for Unicode
+</h1>
+<div id='leftnav'>
+  <table width="100%" cellpadding="0" cellspacing="0" summary="The ICU navigation menu on the left side with content on the right side" >
+                <tr>
+                    <td class="sidebar1">ICU Home</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://www.icu-project.org/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">ICU Home</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4C Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="convexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Converter Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="collation.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Collation Demo</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="icusegments" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Segments</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="idnbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">IDNA</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="locexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Locale Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="nbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Normalization Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="redemo" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Regular Expressions</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="scompare" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">String Compare</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="translit" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Transforms</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="ubrowse" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Unicode Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4J Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://icu-project.org/icu4jdemos.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Demo Page</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">Tools</td>
+                </tr>
+<!--                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://apps.icu-project.org/datacustom/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Data Customizer</span></a></td>
+                </tr>
+-->
+                <tr>
+                    <td class="sidebar1">&nbsp;</td>
+                </tr>
+            </table>
+            <p class="relatedsite">Related Websites</p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/" target="_top">Unicode 
+                    Consortium</a></p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/cldr/" target="_top">Common 
+                    Locale Data</a></p>
+            <p class="sidebar3">&nbsp;</p>
+</div> <!-- end leftnav -->
+<!-- ending left nav ! -->
+<div id='main'>
+
+<div style="font-size: 6px"> </div>
+<a class="bctl" href="//www.icu-project.org/">ICU</a><span class="bct">  &gt; </span>
+<a class="bctl" href="icudemos">Demo</a><span class="bct">  &gt; </span>
+
+<a class="bctl" href="/icu-bin/convexp?s=ALL">Converter Explorer</a><span class="bct">  &gt; </span>
+
+<h1>ibm-1383_P110-1999</h1>
+<table width="97%" border="0" cellspacing="0" style="margin: 1em 0em 1em 1em">
+<tr><td style="white-space: nowrap">
+<form method="get" action="/icu-bin/convexp">
+<p>Select a standard to view:<br />
+<br />
+
+<input type="hidden" name="conv" value="ibm-1383_P110-1999" checked="checked" />
+<input type="checkbox" name="s" value="UTR22" id="UTR22" /> <label for="UTR22">UTR22</label><br />
+<input type="checkbox" name="s" value="IBM" id="IBM" /> <label for="IBM">IBM</label><br />
+<input type="checkbox" name="s" value="WINDOWS" id="WINDOWS" /> <label for="WINDOWS">WINDOWS</label><br />
+<input type="checkbox" name="s" value="JAVA" id="JAVA" /> <label for="JAVA">JAVA</label><br />
+<input type="checkbox" name="s" value="IANA" id="IANA" /> <label for="IANA">IANA</label><br />
+<input type="checkbox" name="s" value="MIME" id="MIME" /> <label for="MIME">MIME</label><br />
+<input type="checkbox" name="s" value="-" id="UntaggedAliases" /> <label for="UntaggedAliases"><em>Untagged Aliases</em></label><br />
+<input type="checkbox" name="s" value="ALL" id="AllAliases" checked="checked" /> <label for="AllAliases"><em>All Aliases</em></label><br />
+<input type="checkbox" name="ShowUnavailable" value="" id="ShowUnavailable" /> <label for="ShowUnavailable"><em>Show Unavailable Converters</em></label><br />
+<br />
+<input type="submit" value="Show Aliases" />
+</p></form>
+</td>
+<td align="right" valign="top">
+<table cellspacing="0" cellpadding="0" border="0" width="175" class="v14-gray-table-border">
+<tr><th colspan="3" class="v14-header-1-small">Related Topics</th></tr>
+<tr><td colspan="3"><span style="font-size: 5px"> </span></td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/docs/demo/convexp_help.html">Converter Explorer Help</a></td><td width="5"> </td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/charts/charset/">ICU Charset Information</a></td><td width="5"> </td></tr>
+<tr><td><span style="font-size: 5px"> </span></td></tr>
+</table>
+</td></tr>
+</table>
+<br /><table cellspacing="0" class="data-table-2">
+
+<caption><em>List of Converter Aliases</em></caption>
+<tr><th style="text-align: center">Internal<br />Converter Name</th>
+<th style="text-align: center"><em>All Aliases</em></th>
+</tr>
+<tr>
+<th style="white-space: nowrap">ibm-1383_P110-1999</th>
+<td class="alias">
+ibm-1383_P110-1999<br />
+ibm-1383<br />
+GB2312<br />
+csGB2312<br />
+cp1383<br />
+1383<br />
+EUC-CN<br />
+ibm-eucCN<br />
+hp15CN<br />
+ibm-1383_VPUA</td>
+</tr>
+</table><br /><br />
+<table width="100%" cellspacing="0" class="data-table-2" summary="A 16 by 16 table with headers on each side of the table representing the nibble of a byte.">
+<caption><em><a name="layout"></a>Codepage Layout</em></caption>
+<tr><td colspan="18"></td></tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+<tr>
+<th style="text-align: center">00</th>
+<td align="center" title="<control-0000>"><div class="iso">NUL</div><span class="small">0000</span></td>
+<td align="center" title="<control-0001>"><div class="iso">SOH</div><span class="small">0001</span></td>
+<td align="center" title="<control-0002>"><div class="iso">STX</div><span class="small">0002</span></td>
+<td align="center" title="<control-0003>"><div class="iso">ETX</div><span class="small">0003</span></td>
+<td align="center" title="<control-0004>"><div class="iso">EOT</div><span class="small">0004</span></td>
+<td align="center" title="<control-0005>"><div class="iso">ENQ</div><span class="small">0005</span></td>
+<td align="center" title="<control-0006>"><div class="iso">ACK</div><span class="small">0006</span></td>
+<td align="center" title="<control-0007>"><div class="iso">BEL</div><span class="small">0007</span></td>
+<td align="center" title="<control-0008>"><div class="iso">BS</div><span class="small">0008</span></td>
+<td align="center" title="<control-0009>"><div class="iso">HT</div><span class="small">0009</span></td>
+<td align="center" title="<control-000A>"><div class="iso">LF</div><span class="small">000A</span></td>
+<td align="center" title="<control-000B>"><div class="iso">VT</div><span class="small">000B</span></td>
+<td align="center" title="<control-000C>"><div class="iso">FF</div><span class="small">000C</span></td>
+<td align="center" title="<control-000D>"><div class="iso">CR</div><span class="small">000D</span></td>
+<td align="center" title="<control-000E>"><div class="iso">SO</div><span class="small">000E</span></td>
+<td align="center" title="<control-000F>"><div class="iso">SI</div><span class="small">000F</span></td>
+<th style="text-align: center">00</th>
+</tr>
+<tr>
+<th style="text-align: center">10</th>
+<td align="center" title="<control-0010>"><div class="iso">DLE</div><span class="small">0010</span></td>
+<td align="center" title="<control-0011>"><div class="iso">DC1</div><span class="small">0011</span></td>
+<td align="center" title="<control-0012>"><div class="iso">DC2</div><span class="small">0012</span></td>
+<td align="center" title="<control-0013>"><div class="iso">DC3</div><span class="small">0013</span></td>
+<td align="center" title="<control-0014>"><div class="iso">DC4</div><span class="small">0014</span></td>
+<td align="center" title="<control-0015>"><div class="iso">NAK</div><span class="small">0015</span></td>
+<td align="center" title="<control-0016>"><div class="iso">SYN</div><span class="small">0016</span></td>
+<td align="center" title="<control-0017>"><div class="iso">ETB</div><span class="small">0017</span></td>
+<td align="center" title="<control-0018>"><div class="iso">CAN</div><span class="small">0018</span></td>
+<td align="center" title="<control-0019>"><div class="iso">EM</div><span class="small">0019</span></td>
+<td align="center" title="<control-001A>"><div class="iso">SUB</div><span class="small">001A</span></td>
+<td align="center" title="<control-001B>"><div class="iso">ESC</div><span class="small">001B</span></td>
+<td align="center" title="<control-001C>"><div class="iso">FS</div><span class="small">001C</span></td>
+<td align="center" title="<control-001D>"><div class="iso">GS</div><span class="small">001D</span></td>
+<td align="center" title="<control-001E>"><div class="iso">RS</div><span class="small">001E</span></td>
+<td align="center" title="<control-001F>"><div class="iso">US</div><span class="small">001F</span></td>
+<th style="text-align: center">10</th>
+</tr>
+<tr>
+<th style="text-align: center">20</th>
+<td align="center" title="SPACE"><div class="glyph"> <br /></div><span class="small">0020</span></td>
+<td align="center" title="EXCLAMATION MARK"><div class="glyph">!</div><span class="small">0021</span></td>
+<td align="center" title="QUOTATION MARK"><div class="glyph">"</div><span class="small">0022</span></td>
+<td align="center" title="NUMBER SIGN"><div class="glyph">#</div><span class="small">0023</span></td>
+<td align="center" title="DOLLAR SIGN"><div class="glyph">$</div><span class="small">0024</span></td>
+<td align="center" title="PERCENT SIGN"><div class="glyph">%</div><span class="small">0025</span></td>
+<td align="center" title="AMPERSAND"><div class="glyph">&amp;</div><span class="small">0026</span></td>
+<td align="center" title="APOSTROPHE"><div class="glyph">'</div><span class="small">0027</span></td>
+<td align="center" title="LEFT PARENTHESIS"><div class="glyph">(</div><span class="small">0028</span></td>
+<td align="center" title="RIGHT PARENTHESIS"><div class="glyph">)</div><span class="small">0029</span></td>
+<td align="center" title="ASTERISK"><div class="glyph">*</div><span class="small">002A</span></td>
+<td align="center" title="PLUS SIGN"><div class="glyph">+</div><span class="small">002B</span></td>
+<td align="center" title="COMMA"><div class="glyph">,</div><span class="small">002C</span></td>
+<td align="center" title="HYPHEN-MINUS"><div class="glyph">-</div><span class="small">002D</span></td>
+<td align="center" title="FULL STOP"><div class="glyph">.</div><span class="small">002E</span></td>
+<td align="center" title="SOLIDUS"><div class="glyph">/</div><span class="small">002F</span></td>
+<th style="text-align: center">20</th>
+</tr>
+<tr>
+<th style="text-align: center">30</th>
+<td align="center" title="DIGIT ZERO"><div class="glyph">0</div><span class="small">0030</span></td>
+<td align="center" title="DIGIT ONE"><div class="glyph">1</div><span class="small">0031</span></td>
+<td align="center" title="DIGIT TWO"><div class="glyph">2</div><span class="small">0032</span></td>
+<td align="center" title="DIGIT THREE"><div class="glyph">3</div><span class="small">0033</span></td>
+<td align="center" title="DIGIT FOUR"><div class="glyph">4</div><span class="small">0034</span></td>
+<td align="center" title="DIGIT FIVE"><div class="glyph">5</div><span class="small">0035</span></td>
+<td align="center" title="DIGIT SIX"><div class="glyph">6</div><span class="small">0036</span></td>
+<td align="center" title="DIGIT SEVEN"><div class="glyph">7</div><span class="small">0037</span></td>
+<td align="center" title="DIGIT EIGHT"><div class="glyph">8</div><span class="small">0038</span></td>
+<td align="center" title="DIGIT NINE"><div class="glyph">9</div><span class="small">0039</span></td>
+<td align="center" title="COLON"><div class="glyph">:</div><span class="small">003A</span></td>
+<td align="center" title="SEMICOLON"><div class="glyph">;</div><span class="small">003B</span></td>
+<td align="center" title="LESS-THAN SIGN"><div class="glyph">&lt;</div><span class="small">003C</span></td>
+<td align="center" title="EQUALS SIGN"><div class="glyph">=</div><span class="small">003D</span></td>
+<td align="center" title="GREATER-THAN SIGN"><div class="glyph">&gt;</div><span class="small">003E</span></td>
+<td align="center" title="QUESTION MARK"><div class="glyph">?</div><span class="small">003F</span></td>
+<th style="text-align: center">30</th>
+</tr>
+<tr>
+<th style="text-align: center">40</th>
+<td align="center" title="COMMERCIAL AT"><div class="glyph">@</div><span class="small">0040</span></td>
+<td align="center" title="LATIN CAPITAL LETTER A"><div class="glyph">A</div><span class="small">0041</span></td>
+<td align="center" title="LATIN CAPITAL LETTER B"><div class="glyph">B</div><span class="small">0042</span></td>
+<td align="center" title="LATIN CAPITAL LETTER C"><div class="glyph">C</div><span class="small">0043</span></td>
+<td align="center" title="LATIN CAPITAL LETTER D"><div class="glyph">D</div><span class="small">0044</span></td>
+<td align="center" title="LATIN CAPITAL LETTER E"><div class="glyph">E</div><span class="small">0045</span></td>
+<td align="center" title="LATIN CAPITAL LETTER F"><div class="glyph">F</div><span class="small">0046</span></td>
+<td align="center" title="LATIN CAPITAL LETTER G"><div class="glyph">G</div><span class="small">0047</span></td>
+<td align="center" title="LATIN CAPITAL LETTER H"><div class="glyph">H</div><span class="small">0048</span></td>
+<td align="center" title="LATIN CAPITAL LETTER I"><div class="glyph">I</div><span class="small">0049</span></td>
+<td align="center" title="LATIN CAPITAL LETTER J"><div class="glyph">J</div><span class="small">004A</span></td>
+<td align="center" title="LATIN CAPITAL LETTER K"><div class="glyph">K</div><span class="small">004B</span></td>
+<td align="center" title="LATIN CAPITAL LETTER L"><div class="glyph">L</div><span class="small">004C</span></td>
+<td align="center" title="LATIN CAPITAL LETTER M"><div class="glyph">M</div><span class="small">004D</span></td>
+<td align="center" title="LATIN CAPITAL LETTER N"><div class="glyph">N</div><span class="small">004E</span></td>
+<td align="center" title="LATIN CAPITAL LETTER O"><div class="glyph">O</div><span class="small">004F</span></td>
+<th style="text-align: center">40</th>
+</tr>
+<tr>
+<th style="text-align: center">50</th>
+<td align="center" title="LATIN CAPITAL LETTER P"><div class="glyph">P</div><span class="small">0050</span></td>
+<td align="center" title="LATIN CAPITAL LETTER Q"><div class="glyph">Q</div><span class="small">0051</span></td>
+<td align="center" title="LATIN CAPITAL LETTER R"><div class="glyph">R</div><span class="small">0052</span></td>
+<td align="center" title="LATIN CAPITAL LETTER S"><div class="glyph">S</div><span class="small">0053</span></td>
+<td align="center" title="LATIN CAPITAL LETTER T"><div class="glyph">T</div><span class="small">0054</span></td>
+<td align="center" title="LATIN CAPITAL LETTER U"><div class="glyph">U</div><span class="small">0055</span></td>
+<td align="center" title="LATIN CAPITAL LETTER V"><div class="glyph">V</div><span class="small">0056</span></td>
+<td align="center" title="LATIN CAPITAL LETTER W"><div class="glyph">W</div><span class="small">0057</span></td>
+<td align="center" title="LATIN CAPITAL LETTER X"><div class="glyph">X</div><span class="small">0058</span></td>
+<td align="center" title="LATIN CAPITAL LETTER Y"><div class="glyph">Y</div><span class="small">0059</span></td>
+<td align="center" title="LATIN CAPITAL LETTER Z"><div class="glyph">Z</div><span class="small">005A</span></td>
+<td align="center" title="LEFT SQUARE BRACKET"><div class="glyph">[</div><span class="small">005B</span></td>
+<td align="center" title="REVERSE SOLIDUS"><div class="glyph">\</div><span class="small">005C</span></td>
+<td align="center" title="RIGHT SQUARE BRACKET"><div class="glyph">]</div><span class="small">005D</span></td>
+<td align="center" title="CIRCUMFLEX ACCENT"><div class="glyph">^</div><span class="small">005E</span></td>
+<td align="center" title="LOW LINE"><div class="glyph">_</div><span class="small">005F</span></td>
+<th style="text-align: center">50</th>
+</tr>
+<tr>
+<th style="text-align: center">60</th>
+<td align="center" title="GRAVE ACCENT"><div class="glyph">`</div><span class="small">0060</span></td>
+<td align="center" title="LATIN SMALL LETTER A"><div class="glyph">a</div><span class="small">0061</span></td>
+<td align="center" title="LATIN SMALL LETTER B"><div class="glyph">b</div><span class="small">0062</span></td>
+<td align="center" title="LATIN SMALL LETTER C"><div class="glyph">c</div><span class="small">0063</span></td>
+<td align="center" title="LATIN SMALL LETTER D"><div class="glyph">d</div><span class="small">0064</span></td>
+<td align="center" title="LATIN SMALL LETTER E"><div class="glyph">e</div><span class="small">0065</span></td>
+<td align="center" title="LATIN SMALL LETTER F"><div class="glyph">f</div><span class="small">0066</span></td>
+<td align="center" title="LATIN SMALL LETTER G"><div class="glyph">g</div><span class="small">0067</span></td>
+<td align="center" title="LATIN SMALL LETTER H"><div class="glyph">h</div><span class="small">0068</span></td>
+<td align="center" title="LATIN SMALL LETTER I"><div class="glyph">i</div><span class="small">0069</span></td>
+<td align="center" title="LATIN SMALL LETTER J"><div class="glyph">j</div><span class="small">006A</span></td>
+<td align="center" title="LATIN SMALL LETTER K"><div class="glyph">k</div><span class="small">006B</span></td>
+<td align="center" title="LATIN SMALL LETTER L"><div class="glyph">l</div><span class="small">006C</span></td>
+<td align="center" title="LATIN SMALL LETTER M"><div class="glyph">m</div><span class="small">006D</span></td>
+<td align="center" title="LATIN SMALL LETTER N"><div class="glyph">n</div><span class="small">006E</span></td>
+<td align="center" title="LATIN SMALL LETTER O"><div class="glyph">o</div><span class="small">006F</span></td>
+<th style="text-align: center">60</th>
+</tr>
+<tr>
+<th style="text-align: center">70</th>
+<td align="center" title="LATIN SMALL LETTER P"><div class="glyph">p</div><span class="small">0070</span></td>
+<td align="center" title="LATIN SMALL LETTER Q"><div class="glyph">q</div><span class="small">0071</span></td>
+<td align="center" title="LATIN SMALL LETTER R"><div class="glyph">r</div><span class="small">0072</span></td>
+<td align="center" title="LATIN SMALL LETTER S"><div class="glyph">s</div><span class="small">0073</span></td>
+<td align="center" title="LATIN SMALL LETTER T"><div class="glyph">t</div><span class="small">0074</span></td>
+<td align="center" title="LATIN SMALL LETTER U"><div class="glyph">u</div><span class="small">0075</span></td>
+<td align="center" title="LATIN SMALL LETTER V"><div class="glyph">v</div><span class="small">0076</span></td>
+<td align="center" title="LATIN SMALL LETTER W"><div class="glyph">w</div><span class="small">0077</span></td>
+<td align="center" title="LATIN SMALL LETTER X"><div class="glyph">x</div><span class="small">0078</span></td>
+<td align="center" title="LATIN SMALL LETTER Y"><div class="glyph">y</div><span class="small">0079</span></td>
+<td align="center" title="LATIN SMALL LETTER Z"><div class="glyph">z</div><span class="small">007A</span></td>
+<td align="center" title="LEFT CURLY BRACKET"><div class="glyph">{</div><span class="small">007B</span></td>
+<td align="center" title="VERTICAL LINE"><div class="glyph">|</div><span class="small">007C</span></td>
+<td align="center" title="RIGHT CURLY BRACKET"><div class="glyph">}</div><span class="small">007D</span></td>
+<td align="center" title="TILDE"><div class="glyph">~</div><span class="small">007E</span></td>
+<td align="center" title="<control-007F>"><div class="iso">DEL</div><span class="small">007F</span></td>
+<th style="text-align: center">70</th>
+</tr>
+<tr>
+<th style="text-align: center">80</th>
+<td align="center" title="<control-0080>"><div class="iso"><br /></div><span class="small">0080</span></td>
+<td align="center" title="<control-0081>"><div class="iso"><br /></div><span class="small">0081</span></td>
+<td align="center" title="<control-0082>"><div class="iso">BPH</div><span class="small">0082</span></td>
+<td align="center" title="<control-0083>"><div class="iso">NBH</div><span class="small">0083</span></td>
+<td align="center" title="<control-0084>"><div class="iso"><br /></div><span class="small">0084</span></td>
+<td align="center" title="<control-0085>"><div class="iso">NEL</div><span class="small">0085</span></td>
+<td align="center" title="<control-0086>"><div class="iso">SSA</div><span class="small">0086</span></td>
+<td align="center" title="<control-0087>"><div class="iso">ESA</div><span class="small">0087</span></td>
+<td align="center" title="<control-0088>"><div class="iso">HTS</div><span class="small">0088</span></td>
+<td align="center" title="<control-0089>"><div class="iso">HTJ</div><span class="small">0089</span></td>
+<td align="center" title="<control-008A>"><div class="iso">VTS</div><span class="small">008A</span></td>
+<td align="center" title="<control-008B>"><div class="iso">PLD</div><span class="small">008B</span></td>
+<td align="center" title="<control-008C>"><div class="iso">PLU</div><span class="small">008C</span></td>
+<td align="center" title="<control-008D>"><div class="iso">RI</div><span class="small">008D</span></td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">80</th>
+</tr>
+<tr>
+<th style="text-align: center">90</th>
+<td align="center" title="<control-0090>"><div class="iso">DCS</div><span class="small">0090</span></td>
+<td align="center" title="<control-0091>"><div class="iso">PU1</div><span class="small">0091</span></td>
+<td align="center" title="<control-0092>"><div class="iso">PU2</div><span class="small">0092</span></td>
+<td align="center" title="<control-0093>"><div class="iso">STS</div><span class="small">0093</span></td>
+<td align="center" title="<control-0094>"><div class="iso">CCH</div><span class="small">0094</span></td>
+<td align="center" title="<control-0095>"><div class="iso">MW</div><span class="small">0095</span></td>
+<td align="center" title="<control-0096>"><div class="iso">SPA</div><span class="small">0096</span></td>
+<td align="center" title="<control-0097>"><div class="iso">EPA</div><span class="small">0097</span></td>
+<td align="center" title="<control-0098>"><div class="iso">SOS</div><span class="small">0098</span></td>
+<td align="center" title="<control-0099>"><div class="iso"><br /></div><span class="small">0099</span></td>
+<td align="center" title="<control-009A>"><div class="iso">SCI</div><span class="small">009A</span></td>
+<td align="center" title="<control-009B>"><div class="iso">CSI</div><span class="small">009B</span></td>
+<td align="center" title="<control-009C>"><div class="iso">ST</div><span class="small">009C</span></td>
+<td align="center" title="<control-009D>"><div class="iso">OSC</div><span class="small">009D</span></td>
+<td align="center" title="<control-009E>"><div class="iso">PM</div><span class="small">009E</span></td>
+<td align="center" title="<control-009F>"><div class="iso">APC</div><span class="small">009F</span></td>
+<th style="text-align: center">90</th>
+</tr>
+<tr>
+<th style="text-align: center">A0</th>
+<td class="reserved"> </td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A1&amp;s=ALL#layout">A1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A2&amp;s=ALL#layout">A2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A3&amp;s=ALL#layout">A3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A4&amp;s=ALL#layout">A4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A5&amp;s=ALL#layout">A5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A6&amp;s=ALL#layout">A6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A7&amp;s=ALL#layout">A7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A8&amp;s=ALL#layout">A8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=A9&amp;s=ALL#layout">A9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AA&amp;s=ALL#layout">AA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AB&amp;s=ALL#layout">AB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AC&amp;s=ALL#layout">AC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AD&amp;s=ALL#layout">AD</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AE&amp;s=ALL#layout">AE</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=AF&amp;s=ALL#layout">AF</a></td>
+<th style="text-align: center">A0</th>
+</tr>
+<tr>
+<th style="text-align: center">B0</th>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B0&amp;s=ALL#layout">B0</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B1&amp;s=ALL#layout">B1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B2&amp;s=ALL#layout">B2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B3&amp;s=ALL#layout">B3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B4&amp;s=ALL#layout">B4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B5&amp;s=ALL#layout">B5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B6&amp;s=ALL#layout">B6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B7&amp;s=ALL#layout">B7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B8&amp;s=ALL#layout">B8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=B9&amp;s=ALL#layout">B9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BA&amp;s=ALL#layout">BA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BB&amp;s=ALL#layout">BB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BC&amp;s=ALL#layout">BC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BD&amp;s=ALL#layout">BD</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BE&amp;s=ALL#layout">BE</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=BF&amp;s=ALL#layout">BF</a></td>
+<th style="text-align: center">B0</th>
+</tr>
+<tr>
+<th style="text-align: center">C0</th>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C0&amp;s=ALL#layout">C0</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C1&amp;s=ALL#layout">C1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C2&amp;s=ALL#layout">C2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C3&amp;s=ALL#layout">C3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C4&amp;s=ALL#layout">C4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C5&amp;s=ALL#layout">C5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C6&amp;s=ALL#layout">C6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C7&amp;s=ALL#layout">C7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C8&amp;s=ALL#layout">C8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=C9&amp;s=ALL#layout">C9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CA&amp;s=ALL#layout">CA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CB&amp;s=ALL#layout">CB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CC&amp;s=ALL#layout">CC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CD&amp;s=ALL#layout">CD</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CE&amp;s=ALL#layout">CE</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=CF&amp;s=ALL#layout">CF</a></td>
+<th style="text-align: center">C0</th>
+</tr>
+<tr>
+<th style="text-align: center">D0</th>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D0&amp;s=ALL#layout">D0</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D1&amp;s=ALL#layout">D1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D2&amp;s=ALL#layout">D2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D3&amp;s=ALL#layout">D3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D4&amp;s=ALL#layout">D4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D5&amp;s=ALL#layout">D5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D6&amp;s=ALL#layout">D6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D7&amp;s=ALL#layout">D7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D8&amp;s=ALL#layout">D8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=D9&amp;s=ALL#layout">D9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DA&amp;s=ALL#layout">DA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DB&amp;s=ALL#layout">DB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DC&amp;s=ALL#layout">DC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DD&amp;s=ALL#layout">DD</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DE&amp;s=ALL#layout">DE</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=DF&amp;s=ALL#layout">DF</a></td>
+<th style="text-align: center">D0</th>
+</tr>
+<tr>
+<th style="text-align: center">E0</th>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E0&amp;s=ALL#layout">E0</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E1&amp;s=ALL#layout">E1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E2&amp;s=ALL#layout">E2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E3&amp;s=ALL#layout">E3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E4&amp;s=ALL#layout">E4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E5&amp;s=ALL#layout">E5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E6&amp;s=ALL#layout">E6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E7&amp;s=ALL#layout">E7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E8&amp;s=ALL#layout">E8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=E9&amp;s=ALL#layout">E9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=EA&amp;s=ALL#layout">EA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=EB&amp;s=ALL#layout">EB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=EC&amp;s=ALL#layout">EC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=ED&amp;s=ALL#layout">ED</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=EE&amp;s=ALL#layout">EE</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=EF&amp;s=ALL#layout">EF</a></td>
+<th style="text-align: center">E0</th>
+</tr>
+<tr>
+<th style="text-align: center">F0</th>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F0&amp;s=ALL#layout">F0</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F1&amp;s=ALL#layout">F1</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F2&amp;s=ALL#layout">F2</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F3&amp;s=ALL#layout">F3</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F4&amp;s=ALL#layout">F4</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F5&amp;s=ALL#layout">F5</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F6&amp;s=ALL#layout">F6</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F7&amp;s=ALL#layout">F7</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F8&amp;s=ALL#layout">F8</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=F9&amp;s=ALL#layout">F9</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=FA&amp;s=ALL#layout">FA</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=FB&amp;s=ALL#layout">FB</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=FC&amp;s=ALL#layout">FC</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=FD&amp;s=ALL#layout">FD</a></td>
+<td class="continue"><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;b=FE&amp;s=ALL#layout">FE</a></td>
+<td class="reserved"> </td>
+<th style="text-align: center">F0</th>
+</tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+</table>
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em>Information About This Converter</em></caption>
+
+<tr><th>Type of converter</th><td>UCNV_MBCS</td></tr>
+<tr><th>Minimum number of bytes per UChar</th><td>1</td></tr>
+<tr><th>Maximum number of bytes per UChar</th><td>2</td></tr>
+<tr><th>Substitution character</th><td>\xA1\xA1</td></tr>
+<tr><th>Starter bytes</th><td>[\xA1-\xFE]</td></tr>
+<tr><th>Is ASCII [\x20-\x7E] compatible?</th><td>TRUE</td></tr>
+<tr><th>Is ASCII [\u0020-\u007E] ambiguous?</th><td>FALSE</td></tr>
+<tr><th>Contains ambiguous aliases?</th><td>FALSE</td></tr>
+<tr><th>Always generates Unicode NFC?</th><td>TRUE</td></tr>
+<tr><th>Contains BiDi characters?</th><td>FALSE</td></tr>
+</table>
+<br /><table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em><a name="ShowLocales"></a>List of Languages Representable By This Codepage</em></caption>
+
+<tr><td><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowLocales&amp;s=ALL#ShowLocales">View Complete Set...</a></td></tr>
+</table><br /><h2><a name="ShowSet"></a>Set of Unicode Characters Representable By This Codepage</h2>
+<p><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowSet&amp;s=ALL#ShowSet">View Complete Set...</a></p>
+</div><!-- end main content -->
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved.  -->
+<!-- common footer -->
+<!-- end common footer -->
+</body>
+</html>
+

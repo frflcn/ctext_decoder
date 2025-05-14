@@ -10,10 +10,13 @@ def print_type(obj) -> None:
     print(type(obj).__name__)
     print(type(obj).__module__)
 
+webpages = []
+
 def find_and_operate_on_table(url: str, fn, is_first: bool) -> list:
+    global webpages
     # if url != "https://icu4c-demos.unicode.org/icu-bin/convexp?conv=ibm-1383_P110-1999&b=A1&s=ALL#layout" and url != "https://icu4c-demos.unicode.org/icu-bin/convexp?conv=gb2312":
     #     return
-    print(url)
+
     response = requests.get(url)
     if response.status_code != 200:
         print(response.reason)
@@ -21,6 +24,17 @@ def find_and_operate_on_table(url: str, fn, is_first: bool) -> list:
         print(url)
         sys.exit()
     content = response.content
+    
+    if "conv=gb2312" in url:
+        name = "master"
+        webpages.append((name + ".html", response.text))
+    else:
+        locator = "1999&b="
+        index = url.find(locator)
+        name = url[index + len(locator): index + len(locator) + 2]
+        webpages.append((f"{name[0]}/" + name + ".html", response.text))
+    
+    print(name)
     soup = BeautifulSoup(content, "html.parser")
     table = soup.find(attrs={"summary": re.compile("^A 16 by 16")})
     rows = table.find_all("tr")
@@ -80,6 +94,11 @@ file_directory = os.path.dirname(os.path.realpath(__file__))
 encoding_path = os.path.join(file_directory, "../gb_2312.rs")
 with open(encoding_path, "w") as f:
     f.write(str(encoding_file))
+
+for webpage in webpages:
+    webpage_path = os.path.join(file_directory, "webpages/gb_2312/" + webpage[0])
+    with open(webpage_path, "w") as f:
+        f.write(webpage[1])
 
 
 

@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+<!-- Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Abstract" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Keywords" content="ICU, ICU4C, converter, conversion, charset, character set, codepage, encoding"/>
+<meta name="Robots" content="index,nofollow"/>
+<title>ICU Demonstration - Converter Explorer</title>
+<link rel="stylesheet" type="text/css" href="./icudemos/icu.css" />
+<link rel="stylesheet" type="text/css" href="./icudemos/main.css" />
+<link rel="SHORTCUT ICON" href="//www.icu-project.org/favicon.ico"/>
+<style type="text/css">
+/*<![CDATA[*/
+div.unicodeset {font-family: monospace; }
+span.autobr:after {font-family: monospace; content: "\00200B"; }
+table.data-table-2 { border-right: #000 solid 1px; border-bottom: #000 solid 1px; border-left: 0px; border-top: 0px; }
+table.data-table-2 td,
+table.data-table-2 th{ padding-left:3px; padding-right:3px; padding-top:3px; border-left: #000 solid 1px; border-top: #000 solid 1px; border-right: 0px; border-bottom: 0px; }
+table.data-table-2 caption {border-bottom:#fff solid 0px;}
+table.data-table-2 td.alias {white-space: nowrap;}
+table.data-table-2 td.reserved {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 td.continue {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 div.iso {margin-top: 0.2em; margin-bottom: 0.2em; border: solid; border-width: 1px; font-size: 100%; font-family: monospace;}
+table.data-table-2 div.glyph {font-size: 160%; font-family: initial;}
+/*]]>*/
+</style>
+</head>
+<body>
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+
+
+<!-- common masthead -->
+<!-- DEMO_BEGIN_LEFT_NAV -->
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006-2012, IBM and others. All Rights Reserved. -->
+<!-- 
+Note: All links need a target="_top" because of how the translit demo works.
+-->
+<h1 id='topbar'>
+  International Components for Unicode
+</h1>
+<div id='leftnav'>
+  <table width="100%" cellpadding="0" cellspacing="0" summary="The ICU navigation menu on the left side with content on the right side" >
+                <tr>
+                    <td class="sidebar1">ICU Home</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://www.icu-project.org/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">ICU Home</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4C Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="convexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Converter Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="collation.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Collation Demo</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="icusegments" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Segments</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="idnbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">IDNA</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="locexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Locale Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="nbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Normalization Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="redemo" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Regular Expressions</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="scompare" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">String Compare</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="translit" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Transforms</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="ubrowse" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Unicode Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4J Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://icu-project.org/icu4jdemos.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Demo Page</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">Tools</td>
+                </tr>
+<!--                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://apps.icu-project.org/datacustom/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Data Customizer</span></a></td>
+                </tr>
+-->
+                <tr>
+                    <td class="sidebar1">&nbsp;</td>
+                </tr>
+            </table>
+            <p class="relatedsite">Related Websites</p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/" target="_top">Unicode 
+                    Consortium</a></p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/cldr/" target="_top">Common 
+                    Locale Data</a></p>
+            <p class="sidebar3">&nbsp;</p>
+</div> <!-- end leftnav -->
+<!-- ending left nav ! -->
+<div id='main'>
+
+<div style="font-size: 6px"> </div>
+<a class="bctl" href="//www.icu-project.org/">ICU</a><span class="bct">  &gt; </span>
+<a class="bctl" href="icudemos">Demo</a><span class="bct">  &gt; </span>
+
+<a class="bctl" href="/icu-bin/convexp?s=ALL">Converter Explorer</a><span class="bct">  &gt; </span>
+
+<h1>ibm-1383_P110-1999</h1>
+<table width="97%" border="0" cellspacing="0" style="margin: 1em 0em 1em 1em">
+<tr><td style="white-space: nowrap">
+<form method="get" action="/icu-bin/convexp">
+<p>Select a standard to view:<br />
+<br />
+
+<input type="hidden" name="conv" value="ibm-1383_P110-1999" checked="checked" />
+<input type="hidden" name="b" value="E4"  checked="checked" />
+<input type="checkbox" name="s" value="UTR22" id="UTR22" /> <label for="UTR22">UTR22</label><br />
+<input type="checkbox" name="s" value="IBM" id="IBM" /> <label for="IBM">IBM</label><br />
+<input type="checkbox" name="s" value="WINDOWS" id="WINDOWS" /> <label for="WINDOWS">WINDOWS</label><br />
+<input type="checkbox" name="s" value="JAVA" id="JAVA" /> <label for="JAVA">JAVA</label><br />
+<input type="checkbox" name="s" value="IANA" id="IANA" /> <label for="IANA">IANA</label><br />
+<input type="checkbox" name="s" value="MIME" id="MIME" /> <label for="MIME">MIME</label><br />
+<input type="checkbox" name="s" value="-" id="UntaggedAliases" /> <label for="UntaggedAliases"><em>Untagged Aliases</em></label><br />
+<input type="checkbox" name="s" value="ALL" id="AllAliases" checked="checked" /> <label for="AllAliases"><em>All Aliases</em></label><br />
+<input type="checkbox" name="ShowUnavailable" value="" id="ShowUnavailable" /> <label for="ShowUnavailable"><em>Show Unavailable Converters</em></label><br />
+<br />
+<input type="submit" value="Show Aliases" />
+</p></form>
+</td>
+<td align="right" valign="top">
+<table cellspacing="0" cellpadding="0" border="0" width="175" class="v14-gray-table-border">
+<tr><th colspan="3" class="v14-header-1-small">Related Topics</th></tr>
+<tr><td colspan="3"><span style="font-size: 5px"> </span></td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/docs/demo/convexp_help.html">Converter Explorer Help</a></td><td width="5"> </td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/charts/charset/">ICU Charset Information</a></td><td width="5"> </td></tr>
+<tr><td><span style="font-size: 5px"> </span></td></tr>
+</table>
+</td></tr>
+</table>
+<br /><table cellspacing="0" class="data-table-2">
+
+<caption><em>List of Converter Aliases</em></caption>
+<tr><th style="text-align: center">Internal<br />Converter Name</th>
+<th style="text-align: center"><em>All Aliases</em></th>
+</tr>
+<tr>
+<th style="white-space: nowrap">ibm-1383_P110-1999</th>
+<td class="alias">
+ibm-1383_P110-1999<br />
+ibm-1383<br />
+GB2312<br />
+csGB2312<br />
+cp1383<br />
+1383<br />
+EUC-CN<br />
+ibm-eucCN<br />
+hp15CN<br />
+ibm-1383_VPUA</td>
+</tr>
+</table><br /><br />
+<table width="100%" cellspacing="0" class="data-table-2" summary="A 16 by 16 table with headers on each side of the table representing the nibble of a byte.">
+<caption><em><a name="layout"></a>Codepage Layout</em></caption>
+<tr><td colspan="18"><p>Currently showing the codepage starting with the bytes E4</p>
+</td></tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+<tr>
+<th style="text-align: center">00</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">00</th>
+</tr>
+<tr>
+<th style="text-align: center">10</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">10</th>
+</tr>
+<tr>
+<th style="text-align: center">20</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">20</th>
+</tr>
+<tr>
+<th style="text-align: center">30</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">30</th>
+</tr>
+<tr>
+<th style="text-align: center">40</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">40</th>
+</tr>
+<tr>
+<th style="text-align: center">50</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">50</th>
+</tr>
+<tr>
+<th style="text-align: center">60</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">60</th>
+</tr>
+<tr>
+<th style="text-align: center">70</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">70</th>
+</tr>
+<tr>
+<th style="text-align: center">80</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">80</th>
+</tr>
+<tr>
+<th style="text-align: center">90</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">90</th>
+</tr>
+<tr>
+<th style="text-align: center">A0</th>
+<td class="reserved"> </td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D39"><div class="glyph">洹</div><span class="small">6D39</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D27"><div class="glyph">洧</div><span class="small">6D27</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D0C"><div class="glyph">洌</div><span class="small">6D0C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D43"><div class="glyph">浃</div><span class="small">6D43</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D48"><div class="glyph">浈</div><span class="small">6D48</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D07"><div class="glyph">洇</div><span class="small">6D07</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D04"><div class="glyph">洄</div><span class="small">6D04</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D19"><div class="glyph">洙</div><span class="small">6D19</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D0E"><div class="glyph">洎</div><span class="small">6D0E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D2B"><div class="glyph">洫</div><span class="small">6D2B</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D4D"><div class="glyph">浍</div><span class="small">6D4D</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D2E"><div class="glyph">洮</div><span class="small">6D2E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D35"><div class="glyph">洵</div><span class="small">6D35</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D1A"><div class="glyph">洚</div><span class="small">6D1A</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D4F"><div class="glyph">浏</div><span class="small">6D4F</span></td>
+<th style="text-align: center">A0</th>
+</tr>
+<tr>
+<th style="text-align: center">B0</th>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D52"><div class="glyph">浒</div><span class="small">6D52</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D54"><div class="glyph">浔</div><span class="small">6D54</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D33"><div class="glyph">洳</div><span class="small">6D33</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D91"><div class="glyph">涑</div><span class="small">6D91</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D6F"><div class="glyph">浯</div><span class="small">6D6F</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D9E"><div class="glyph">涞</div><span class="small">6D9E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DA0"><div class="glyph">涠</div><span class="small">6DA0</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D5E"><div class="glyph">浞</div><span class="small">6D5E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D93"><div class="glyph">涓</div><span class="small">6D93</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D94"><div class="glyph">涔</div><span class="small">6D94</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D5C"><div class="glyph">浜</div><span class="small">6D5C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D60"><div class="glyph">浠</div><span class="small">6D60</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D7C"><div class="glyph">浼</div><span class="small">6D7C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6D63"><div class="glyph">浣</div><span class="small">6D63</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E1A"><div class="glyph">渚</div><span class="small">6E1A</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DC7"><div class="glyph">淇</div><span class="small">6DC7</span></td>
+<th style="text-align: center">B0</th>
+</tr>
+<tr>
+<th style="text-align: center">C0</th>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DC5"><div class="glyph">淅</div><span class="small">6DC5</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DDE"><div class="glyph">淞</div><span class="small">6DDE</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E0E"><div class="glyph">渎</div><span class="small">6E0E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DBF"><div class="glyph">涿</div><span class="small">6DBF</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DE0"><div class="glyph">淠</div><span class="small">6DE0</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E11"><div class="glyph">渑</div><span class="small">6E11</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DE6"><div class="glyph">淦</div><span class="small">6DE6</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DDD"><div class="glyph">淝</div><span class="small">6DDD</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DD9"><div class="glyph">淙</div><span class="small">6DD9</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E16"><div class="glyph">渖</div><span class="small">6E16</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DAB"><div class="glyph">涫</div><span class="small">6DAB</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E0C"><div class="glyph">渌</div><span class="small">6E0C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6DAE"><div class="glyph">涮</div><span class="small">6DAE</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E2B"><div class="glyph">渫</div><span class="small">6E2B</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E6E"><div class="glyph">湮</div><span class="small">6E6E</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E4E"><div class="glyph">湎</div><span class="small">6E4E</span></td>
+<th style="text-align: center">C0</th>
+</tr>
+<tr>
+<th style="text-align: center">D0</th>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E6B"><div class="glyph">湫</div><span class="small">6E6B</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EB2"><div class="glyph">溲</div><span class="small">6EB2</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E5F"><div class="glyph">湟</div><span class="small">6E5F</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E86"><div class="glyph">溆</div><span class="small">6E86</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E53"><div class="glyph">湓</div><span class="small">6E53</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E54"><div class="glyph">湔</div><span class="small">6E54</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E32"><div class="glyph">渲</div><span class="small">6E32</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E25"><div class="glyph">渥</div><span class="small">6E25</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E44"><div class="glyph">湄</div><span class="small">6E44</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EDF"><div class="glyph">滟</div><span class="small">6EDF</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EB1"><div class="glyph">溱</div><span class="small">6EB1</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E98"><div class="glyph">溘</div><span class="small">6E98</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EE0"><div class="glyph">滠</div><span class="small">6EE0</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F2D"><div class="glyph">漭</div><span class="small">6F2D</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EE2"><div class="glyph">滢</div><span class="small">6EE2</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EA5"><div class="glyph">溥</div><span class="small">6EA5</span></td>
+<th style="text-align: center">D0</th>
+</tr>
+<tr>
+<th style="text-align: center">E0</th>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EA7"><div class="glyph">溧</div><span class="small">6EA7</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EBD"><div class="glyph">溽</div><span class="small">6EBD</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EBB"><div class="glyph">溻</div><span class="small">6EBB</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EB7"><div class="glyph">溷</div><span class="small">6EB7</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6ED7"><div class="glyph">滗</div><span class="small">6ED7</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EB4"><div class="glyph">溴</div><span class="small">6EB4</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6ECF"><div class="glyph">滏</div><span class="small">6ECF</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E8F"><div class="glyph">溏</div><span class="small">6E8F</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EC2"><div class="glyph">滂</div><span class="small">6EC2</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6E9F"><div class="glyph">溟</div><span class="small">6E9F</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F62"><div class="glyph">潢</div><span class="small">6F62</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F46"><div class="glyph">潆</div><span class="small">6F46</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F47"><div class="glyph">潇</div><span class="small">6F47</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F24"><div class="glyph">漤</div><span class="small">6F24</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F15"><div class="glyph">漕</div><span class="small">6F15</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6EF9"><div class="glyph">滹</div><span class="small">6EF9</span></td>
+<th style="text-align: center">E0</th>
+</tr>
+<tr>
+<th style="text-align: center">F0</th>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F2F"><div class="glyph">漯</div><span class="small">6F2F</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F36"><div class="glyph">漶</div><span class="small">6F36</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F4B"><div class="glyph">潋</div><span class="small">6F4B</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F74"><div class="glyph">潴</div><span class="small">6F74</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F2A"><div class="glyph">漪</div><span class="small">6F2A</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F09"><div class="glyph">漉</div><span class="small">6F09</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F29"><div class="glyph">漩</div><span class="small">6F29</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F89"><div class="glyph">澉</div><span class="small">6F89</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F8D"><div class="glyph">澍</div><span class="small">6F8D</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F8C"><div class="glyph">澌</div><span class="small">6F8C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F78"><div class="glyph">潸</div><span class="small">6F78</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F72"><div class="glyph">潲</div><span class="small">6F72</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F7C"><div class="glyph">潼</div><span class="small">6F7C</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6F7A"><div class="glyph">潺</div><span class="small">6F7A</span></td>
+<td align="center" title="CJK UNIFIED IDEOGRAPH-6FD1"><div class="glyph">濑</div><span class="small">6FD1</span></td>
+<td class="reserved"> </td>
+<th style="text-align: center">F0</th>
+</tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+</table>
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em>Information About This Converter</em></caption>
+
+<tr><th>Type of converter</th><td>UCNV_MBCS</td></tr>
+<tr><th>Minimum number of bytes per UChar</th><td>1</td></tr>
+<tr><th>Maximum number of bytes per UChar</th><td>2</td></tr>
+<tr><th>Substitution character</th><td>\xA1\xA1</td></tr>
+<tr><th>Starter bytes</th><td>[\xA1-\xFE]</td></tr>
+<tr><th>Is ASCII [\x20-\x7E] compatible?</th><td>TRUE</td></tr>
+<tr><th>Is ASCII [\u0020-\u007E] ambiguous?</th><td>FALSE</td></tr>
+<tr><th>Contains ambiguous aliases?</th><td>FALSE</td></tr>
+<tr><th>Always generates Unicode NFC?</th><td>TRUE</td></tr>
+<tr><th>Contains BiDi characters?</th><td>FALSE</td></tr>
+</table>
+<br /><table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em><a name="ShowLocales"></a>List of Languages Representable By This Codepage</em></caption>
+
+<tr><td><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowLocales&amp;s=ALL#ShowLocales">View Complete Set...</a></td></tr>
+</table><br /><h2><a name="ShowSet"></a>Set of Unicode Characters Representable By This Codepage</h2>
+<p><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowSet&amp;s=ALL#ShowSet">View Complete Set...</a></p>
+</div><!-- end main content -->
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved.  -->
+<!-- common footer -->
+<!-- end common footer -->
+</body>
+</html>
+

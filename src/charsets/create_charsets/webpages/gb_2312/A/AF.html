@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+<!-- Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Abstract" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Keywords" content="ICU, ICU4C, converter, conversion, charset, character set, codepage, encoding"/>
+<meta name="Robots" content="index,nofollow"/>
+<title>ICU Demonstration - Converter Explorer</title>
+<link rel="stylesheet" type="text/css" href="./icudemos/icu.css" />
+<link rel="stylesheet" type="text/css" href="./icudemos/main.css" />
+<link rel="SHORTCUT ICON" href="//www.icu-project.org/favicon.ico"/>
+<style type="text/css">
+/*<![CDATA[*/
+div.unicodeset {font-family: monospace; }
+span.autobr:after {font-family: monospace; content: "\00200B"; }
+table.data-table-2 { border-right: #000 solid 1px; border-bottom: #000 solid 1px; border-left: 0px; border-top: 0px; }
+table.data-table-2 td,
+table.data-table-2 th{ padding-left:3px; padding-right:3px; padding-top:3px; border-left: #000 solid 1px; border-top: #000 solid 1px; border-right: 0px; border-bottom: 0px; }
+table.data-table-2 caption {border-bottom:#fff solid 0px;}
+table.data-table-2 td.alias {white-space: nowrap;}
+table.data-table-2 td.reserved {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 td.continue {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 div.iso {margin-top: 0.2em; margin-bottom: 0.2em; border: solid; border-width: 1px; font-size: 100%; font-family: monospace;}
+table.data-table-2 div.glyph {font-size: 160%; font-family: initial;}
+/*]]>*/
+</style>
+</head>
+<body>
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+
+
+<!-- common masthead -->
+<!-- DEMO_BEGIN_LEFT_NAV -->
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006-2012, IBM and others. All Rights Reserved. -->
+<!-- 
+Note: All links need a target="_top" because of how the translit demo works.
+-->
+<h1 id='topbar'>
+  International Components for Unicode
+</h1>
+<div id='leftnav'>
+  <table width="100%" cellpadding="0" cellspacing="0" summary="The ICU navigation menu on the left side with content on the right side" >
+                <tr>
+                    <td class="sidebar1">ICU Home</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://www.icu-project.org/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">ICU Home</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4C Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="convexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Converter Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="collation.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Collation Demo</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="icusegments" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Segments</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="idnbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">IDNA</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="locexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Locale Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="nbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Normalization Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="redemo" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Regular Expressions</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="scompare" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">String Compare</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="translit" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Transforms</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="ubrowse" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Unicode Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4J Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://icu-project.org/icu4jdemos.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Demo Page</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">Tools</td>
+                </tr>
+<!--                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://apps.icu-project.org/datacustom/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Data Customizer</span></a></td>
+                </tr>
+-->
+                <tr>
+                    <td class="sidebar1">&nbsp;</td>
+                </tr>
+            </table>
+            <p class="relatedsite">Related Websites</p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/" target="_top">Unicode 
+                    Consortium</a></p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/cldr/" target="_top">Common 
+                    Locale Data</a></p>
+            <p class="sidebar3">&nbsp;</p>
+</div> <!-- end leftnav -->
+<!-- ending left nav ! -->
+<div id='main'>
+
+<div style="font-size: 6px"> </div>
+<a class="bctl" href="//www.icu-project.org/">ICU</a><span class="bct">  &gt; </span>
+<a class="bctl" href="icudemos">Demo</a><span class="bct">  &gt; </span>
+
+<a class="bctl" href="/icu-bin/convexp?s=ALL">Converter Explorer</a><span class="bct">  &gt; </span>
+
+<h1>ibm-1383_P110-1999</h1>
+<table width="97%" border="0" cellspacing="0" style="margin: 1em 0em 1em 1em">
+<tr><td style="white-space: nowrap">
+<form method="get" action="/icu-bin/convexp">
+<p>Select a standard to view:<br />
+<br />
+
+<input type="hidden" name="conv" value="ibm-1383_P110-1999" checked="checked" />
+<input type="hidden" name="b" value="AF"  checked="checked" />
+<input type="checkbox" name="s" value="UTR22" id="UTR22" /> <label for="UTR22">UTR22</label><br />
+<input type="checkbox" name="s" value="IBM" id="IBM" /> <label for="IBM">IBM</label><br />
+<input type="checkbox" name="s" value="WINDOWS" id="WINDOWS" /> <label for="WINDOWS">WINDOWS</label><br />
+<input type="checkbox" name="s" value="JAVA" id="JAVA" /> <label for="JAVA">JAVA</label><br />
+<input type="checkbox" name="s" value="IANA" id="IANA" /> <label for="IANA">IANA</label><br />
+<input type="checkbox" name="s" value="MIME" id="MIME" /> <label for="MIME">MIME</label><br />
+<input type="checkbox" name="s" value="-" id="UntaggedAliases" /> <label for="UntaggedAliases"><em>Untagged Aliases</em></label><br />
+<input type="checkbox" name="s" value="ALL" id="AllAliases" checked="checked" /> <label for="AllAliases"><em>All Aliases</em></label><br />
+<input type="checkbox" name="ShowUnavailable" value="" id="ShowUnavailable" /> <label for="ShowUnavailable"><em>Show Unavailable Converters</em></label><br />
+<br />
+<input type="submit" value="Show Aliases" />
+</p></form>
+</td>
+<td align="right" valign="top">
+<table cellspacing="0" cellpadding="0" border="0" width="175" class="v14-gray-table-border">
+<tr><th colspan="3" class="v14-header-1-small">Related Topics</th></tr>
+<tr><td colspan="3"><span style="font-size: 5px"> </span></td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/docs/demo/convexp_help.html">Converter Explorer Help</a></td><td width="5"> </td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/charts/charset/">ICU Charset Information</a></td><td width="5"> </td></tr>
+<tr><td><span style="font-size: 5px"> </span></td></tr>
+</table>
+</td></tr>
+</table>
+<br /><table cellspacing="0" class="data-table-2">
+
+<caption><em>List of Converter Aliases</em></caption>
+<tr><th style="text-align: center">Internal<br />Converter Name</th>
+<th style="text-align: center"><em>All Aliases</em></th>
+</tr>
+<tr>
+<th style="white-space: nowrap">ibm-1383_P110-1999</th>
+<td class="alias">
+ibm-1383_P110-1999<br />
+ibm-1383<br />
+GB2312<br />
+csGB2312<br />
+cp1383<br />
+1383<br />
+EUC-CN<br />
+ibm-eucCN<br />
+hp15CN<br />
+ibm-1383_VPUA</td>
+</tr>
+</table><br /><br />
+<table width="100%" cellspacing="0" class="data-table-2" summary="A 16 by 16 table with headers on each side of the table representing the nibble of a byte.">
+<caption><em><a name="layout"></a>Codepage Layout</em></caption>
+<tr><td colspan="18"><p>Currently showing the codepage starting with the bytes AF</p>
+</td></tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+<tr>
+<th style="text-align: center">00</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">00</th>
+</tr>
+<tr>
+<th style="text-align: center">10</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">10</th>
+</tr>
+<tr>
+<th style="text-align: center">20</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">20</th>
+</tr>
+<tr>
+<th style="text-align: center">30</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">30</th>
+</tr>
+<tr>
+<th style="text-align: center">40</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">40</th>
+</tr>
+<tr>
+<th style="text-align: center">50</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">50</th>
+</tr>
+<tr>
+<th style="text-align: center">60</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">60</th>
+</tr>
+<tr>
+<th style="text-align: center">70</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">70</th>
+</tr>
+<tr>
+<th style="text-align: center">80</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">80</th>
+</tr>
+<tr>
+<th style="text-align: center">90</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">90</th>
+</tr>
+<tr>
+<th style="text-align: center">A0</th>
+<td class="reserved"> </td>
+<td align="center" title="<private use area-E27A>"><div class="glyph"></div><span class="small">E27A</span></td>
+<td align="center" title="<private use area-E27B>"><div class="glyph"></div><span class="small">E27B</span></td>
+<td align="center" title="<private use area-E27C>"><div class="glyph"></div><span class="small">E27C</span></td>
+<td align="center" title="<private use area-E27D>"><div class="glyph"></div><span class="small">E27D</span></td>
+<td align="center" title="<private use area-E27E>"><div class="glyph"></div><span class="small">E27E</span></td>
+<td align="center" title="<private use area-E27F>"><div class="glyph"></div><span class="small">E27F</span></td>
+<td align="center" title="<private use area-E280>"><div class="glyph"></div><span class="small">E280</span></td>
+<td align="center" title="<private use area-E281>"><div class="glyph"></div><span class="small">E281</span></td>
+<td align="center" title="<private use area-E282>"><div class="glyph"></div><span class="small">E282</span></td>
+<td align="center" title="<private use area-E283>"><div class="glyph"></div><span class="small">E283</span></td>
+<td align="center" title="<private use area-E284>"><div class="glyph"></div><span class="small">E284</span></td>
+<td align="center" title="<private use area-E285>"><div class="glyph"></div><span class="small">E285</span></td>
+<td align="center" title="<private use area-E286>"><div class="glyph"></div><span class="small">E286</span></td>
+<td align="center" title="<private use area-E287>"><div class="glyph"></div><span class="small">E287</span></td>
+<td align="center" title="<private use area-E288>"><div class="glyph"></div><span class="small">E288</span></td>
+<th style="text-align: center">A0</th>
+</tr>
+<tr>
+<th style="text-align: center">B0</th>
+<td align="center" title="<private use area-E289>"><div class="glyph"></div><span class="small">E289</span></td>
+<td align="center" title="<private use area-E28A>"><div class="glyph"></div><span class="small">E28A</span></td>
+<td align="center" title="<private use area-E28B>"><div class="glyph"></div><span class="small">E28B</span></td>
+<td align="center" title="<private use area-E28C>"><div class="glyph"></div><span class="small">E28C</span></td>
+<td align="center" title="<private use area-E28D>"><div class="glyph"></div><span class="small">E28D</span></td>
+<td align="center" title="<private use area-E28E>"><div class="glyph"></div><span class="small">E28E</span></td>
+<td align="center" title="<private use area-E28F>"><div class="glyph"></div><span class="small">E28F</span></td>
+<td align="center" title="<private use area-E290>"><div class="glyph"></div><span class="small">E290</span></td>
+<td align="center" title="<private use area-E291>"><div class="glyph"></div><span class="small">E291</span></td>
+<td align="center" title="<private use area-E292>"><div class="glyph"></div><span class="small">E292</span></td>
+<td align="center" title="<private use area-E293>"><div class="glyph"></div><span class="small">E293</span></td>
+<td align="center" title="<private use area-E294>"><div class="glyph"></div><span class="small">E294</span></td>
+<td align="center" title="<private use area-E295>"><div class="glyph"></div><span class="small">E295</span></td>
+<td align="center" title="<private use area-E296>"><div class="glyph"></div><span class="small">E296</span></td>
+<td align="center" title="<private use area-E297>"><div class="glyph"></div><span class="small">E297</span></td>
+<td align="center" title="<private use area-E298>"><div class="glyph"></div><span class="small">E298</span></td>
+<th style="text-align: center">B0</th>
+</tr>
+<tr>
+<th style="text-align: center">C0</th>
+<td align="center" title="<private use area-E299>"><div class="glyph"></div><span class="small">E299</span></td>
+<td align="center" title="<private use area-E29A>"><div class="glyph"></div><span class="small">E29A</span></td>
+<td align="center" title="<private use area-E29B>"><div class="glyph"></div><span class="small">E29B</span></td>
+<td align="center" title="<private use area-E29C>"><div class="glyph"></div><span class="small">E29C</span></td>
+<td align="center" title="<private use area-E29D>"><div class="glyph"></div><span class="small">E29D</span></td>
+<td align="center" title="<private use area-E29E>"><div class="glyph"></div><span class="small">E29E</span></td>
+<td align="center" title="<private use area-E29F>"><div class="glyph"></div><span class="small">E29F</span></td>
+<td align="center" title="<private use area-E2A0>"><div class="glyph"></div><span class="small">E2A0</span></td>
+<td align="center" title="<private use area-E2A1>"><div class="glyph"></div><span class="small">E2A1</span></td>
+<td align="center" title="<private use area-E2A2>"><div class="glyph"></div><span class="small">E2A2</span></td>
+<td align="center" title="<private use area-E2A3>"><div class="glyph"></div><span class="small">E2A3</span></td>
+<td align="center" title="<private use area-E2A4>"><div class="glyph"></div><span class="small">E2A4</span></td>
+<td align="center" title="<private use area-E2A5>"><div class="glyph"></div><span class="small">E2A5</span></td>
+<td align="center" title="<private use area-E2A6>"><div class="glyph"></div><span class="small">E2A6</span></td>
+<td align="center" title="<private use area-E2A7>"><div class="glyph"></div><span class="small">E2A7</span></td>
+<td align="center" title="<private use area-E2A8>"><div class="glyph"></div><span class="small">E2A8</span></td>
+<th style="text-align: center">C0</th>
+</tr>
+<tr>
+<th style="text-align: center">D0</th>
+<td align="center" title="<private use area-E2A9>"><div class="glyph"></div><span class="small">E2A9</span></td>
+<td align="center" title="<private use area-E2AA>"><div class="glyph"></div><span class="small">E2AA</span></td>
+<td align="center" title="<private use area-E2AB>"><div class="glyph"></div><span class="small">E2AB</span></td>
+<td align="center" title="<private use area-E2AC>"><div class="glyph"></div><span class="small">E2AC</span></td>
+<td align="center" title="<private use area-E2AD>"><div class="glyph"></div><span class="small">E2AD</span></td>
+<td align="center" title="<private use area-E2AE>"><div class="glyph"></div><span class="small">E2AE</span></td>
+<td align="center" title="<private use area-E2AF>"><div class="glyph"></div><span class="small">E2AF</span></td>
+<td align="center" title="<private use area-E2B0>"><div class="glyph"></div><span class="small">E2B0</span></td>
+<td align="center" title="<private use area-E2B1>"><div class="glyph"></div><span class="small">E2B1</span></td>
+<td align="center" title="<private use area-E2B2>"><div class="glyph"></div><span class="small">E2B2</span></td>
+<td align="center" title="<private use area-E2B3>"><div class="glyph"></div><span class="small">E2B3</span></td>
+<td align="center" title="<private use area-E2B4>"><div class="glyph"></div><span class="small">E2B4</span></td>
+<td align="center" title="<private use area-E2B5>"><div class="glyph"></div><span class="small">E2B5</span></td>
+<td align="center" title="<private use area-E2B6>"><div class="glyph"></div><span class="small">E2B6</span></td>
+<td align="center" title="<private use area-E2B7>"><div class="glyph"></div><span class="small">E2B7</span></td>
+<td align="center" title="<private use area-E2B8>"><div class="glyph"></div><span class="small">E2B8</span></td>
+<th style="text-align: center">D0</th>
+</tr>
+<tr>
+<th style="text-align: center">E0</th>
+<td align="center" title="<private use area-E2B9>"><div class="glyph"></div><span class="small">E2B9</span></td>
+<td align="center" title="<private use area-E2BA>"><div class="glyph"></div><span class="small">E2BA</span></td>
+<td align="center" title="<private use area-E2BB>"><div class="glyph"></div><span class="small">E2BB</span></td>
+<td align="center" title="<private use area-E2BC>"><div class="glyph"></div><span class="small">E2BC</span></td>
+<td align="center" title="<private use area-E2BD>"><div class="glyph"></div><span class="small">E2BD</span></td>
+<td align="center" title="<private use area-E2BE>"><div class="glyph"></div><span class="small">E2BE</span></td>
+<td align="center" title="<private use area-E2BF>"><div class="glyph"></div><span class="small">E2BF</span></td>
+<td align="center" title="<private use area-E2C0>"><div class="glyph"></div><span class="small">E2C0</span></td>
+<td align="center" title="<private use area-E2C1>"><div class="glyph"></div><span class="small">E2C1</span></td>
+<td align="center" title="<private use area-E2C2>"><div class="glyph"></div><span class="small">E2C2</span></td>
+<td align="center" title="<private use area-E2C3>"><div class="glyph"></div><span class="small">E2C3</span></td>
+<td align="center" title="<private use area-E2C4>"><div class="glyph"></div><span class="small">E2C4</span></td>
+<td align="center" title="<private use area-E2C5>"><div class="glyph"></div><span class="small">E2C5</span></td>
+<td align="center" title="<private use area-E2C6>"><div class="glyph"></div><span class="small">E2C6</span></td>
+<td align="center" title="<private use area-E2C7>"><div class="glyph"></div><span class="small">E2C7</span></td>
+<td align="center" title="<private use area-E2C8>"><div class="glyph"></div><span class="small">E2C8</span></td>
+<th style="text-align: center">E0</th>
+</tr>
+<tr>
+<th style="text-align: center">F0</th>
+<td align="center" title="<private use area-E2C9>"><div class="glyph"></div><span class="small">E2C9</span></td>
+<td align="center" title="<private use area-E2CA>"><div class="glyph"></div><span class="small">E2CA</span></td>
+<td align="center" title="<private use area-E2CB>"><div class="glyph"></div><span class="small">E2CB</span></td>
+<td align="center" title="<private use area-E2CC>"><div class="glyph"></div><span class="small">E2CC</span></td>
+<td align="center" title="<private use area-E2CD>"><div class="glyph"></div><span class="small">E2CD</span></td>
+<td align="center" title="<private use area-E2CE>"><div class="glyph"></div><span class="small">E2CE</span></td>
+<td align="center" title="<private use area-E2CF>"><div class="glyph"></div><span class="small">E2CF</span></td>
+<td align="center" title="<private use area-E2D0>"><div class="glyph"></div><span class="small">E2D0</span></td>
+<td align="center" title="<private use area-E2D1>"><div class="glyph"></div><span class="small">E2D1</span></td>
+<td align="center" title="<private use area-E2D2>"><div class="glyph"></div><span class="small">E2D2</span></td>
+<td align="center" title="<private use area-E2D3>"><div class="glyph"></div><span class="small">E2D3</span></td>
+<td align="center" title="<private use area-E2D4>"><div class="glyph"></div><span class="small">E2D4</span></td>
+<td align="center" title="<private use area-E2D5>"><div class="glyph"></div><span class="small">E2D5</span></td>
+<td align="center" title="<private use area-E2D6>"><div class="glyph"></div><span class="small">E2D6</span></td>
+<td align="center" title="<private use area-E2D7>"><div class="glyph"></div><span class="small">E2D7</span></td>
+<td class="reserved"> </td>
+<th style="text-align: center">F0</th>
+</tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+</table>
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em>Information About This Converter</em></caption>
+
+<tr><th>Type of converter</th><td>UCNV_MBCS</td></tr>
+<tr><th>Minimum number of bytes per UChar</th><td>1</td></tr>
+<tr><th>Maximum number of bytes per UChar</th><td>2</td></tr>
+<tr><th>Substitution character</th><td>\xA1\xA1</td></tr>
+<tr><th>Starter bytes</th><td>[\xA1-\xFE]</td></tr>
+<tr><th>Is ASCII [\x20-\x7E] compatible?</th><td>TRUE</td></tr>
+<tr><th>Is ASCII [\u0020-\u007E] ambiguous?</th><td>FALSE</td></tr>
+<tr><th>Contains ambiguous aliases?</th><td>FALSE</td></tr>
+<tr><th>Always generates Unicode NFC?</th><td>TRUE</td></tr>
+<tr><th>Contains BiDi characters?</th><td>FALSE</td></tr>
+</table>
+<br /><table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em><a name="ShowLocales"></a>List of Languages Representable By This Codepage</em></caption>
+
+<tr><td><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowLocales&amp;s=ALL#ShowLocales">View Complete Set...</a></td></tr>
+</table><br /><h2><a name="ShowSet"></a>Set of Unicode Characters Representable By This Codepage</h2>
+<p><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowSet&amp;s=ALL#ShowSet">View Complete Set...</a></p>
+</div><!-- end main content -->
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved.  -->
+<!-- common footer -->
+<!-- end common footer -->
+</body>
+</html>
+

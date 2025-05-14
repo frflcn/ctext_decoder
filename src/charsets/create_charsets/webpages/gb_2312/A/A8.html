@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+<!-- Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="Description" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Abstract" content="Here is a demonstration of how ICU conversion works."/>
+<meta name="Keywords" content="ICU, ICU4C, converter, conversion, charset, character set, codepage, encoding"/>
+<meta name="Robots" content="index,nofollow"/>
+<title>ICU Demonstration - Converter Explorer</title>
+<link rel="stylesheet" type="text/css" href="./icudemos/icu.css" />
+<link rel="stylesheet" type="text/css" href="./icudemos/main.css" />
+<link rel="SHORTCUT ICON" href="//www.icu-project.org/favicon.ico"/>
+<style type="text/css">
+/*<![CDATA[*/
+div.unicodeset {font-family: monospace; }
+span.autobr:after {font-family: monospace; content: "\00200B"; }
+table.data-table-2 { border-right: #000 solid 1px; border-bottom: #000 solid 1px; border-left: 0px; border-top: 0px; }
+table.data-table-2 td,
+table.data-table-2 th{ padding-left:3px; padding-right:3px; padding-top:3px; border-left: #000 solid 1px; border-top: #000 solid 1px; border-right: 0px; border-bottom: 0px; }
+table.data-table-2 caption {border-bottom:#fff solid 0px;}
+table.data-table-2 td.alias {white-space: nowrap;}
+table.data-table-2 td.reserved {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 td.continue {min-width: 5.25%; padding-top: 0.85em; padding-bottom: 0.85em; white-space: nowrap; background-color: #EEEEEE; text-align: center; font-size: 115%; font-family: monospace;}
+table.data-table-2 div.iso {margin-top: 0.2em; margin-bottom: 0.2em; border: solid; border-width: 1px; font-size: 100%; font-family: monospace;}
+table.data-table-2 div.glyph {font-size: 160%; font-family: initial;}
+/*]]>*/
+</style>
+</head>
+<body>
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved. -->
+
+
+<!-- common masthead -->
+<!-- DEMO_BEGIN_LEFT_NAV -->
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006-2012, IBM and others. All Rights Reserved. -->
+<!-- 
+Note: All links need a target="_top" because of how the translit demo works.
+-->
+<h1 id='topbar'>
+  International Components for Unicode
+</h1>
+<div id='leftnav'>
+  <table width="100%" cellpadding="0" cellspacing="0" summary="The ICU navigation menu on the left side with content on the right side" >
+                <tr>
+                    <td class="sidebar1">ICU Home</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://www.icu-project.org/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">ICU Home</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4C Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="convexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Converter Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="collation.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Collation Demo</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="icusegments" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Segments</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="idnbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">IDNA</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="locexp" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Locale Explorer</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="nbrowser" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Normalization Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="redemo" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Regular Expressions</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="scompare" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">String Compare</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="translit" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Transforms</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="ubrowse" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Unicode Browser</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">ICU4J Demos</td>
+                </tr>
+                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://icu-project.org/icu4jdemos.html" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Demo Page</span></a></td>
+                </tr>
+                <tr>
+                    <td class="sidebar1">Tools</td>
+                </tr>
+<!--                <tr>
+                    <td class="sidebar2"><a class="sidebar2" href="http://apps.icu-project.org/datacustom/" target="_top">&nbsp;&nbsp;&middot;&nbsp;<span class="underlinehover">Data Customizer</span></a></td>
+                </tr>
+-->
+                <tr>
+                    <td class="sidebar1">&nbsp;</td>
+                </tr>
+            </table>
+            <p class="relatedsite">Related Websites</p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/" target="_top">Unicode 
+                    Consortium</a></p>
+            <p class="sidebar3"><a class="sidebar3" href="http://www.unicode.org/cldr/" target="_top">Common 
+                    Locale Data</a></p>
+            <p class="sidebar3">&nbsp;</p>
+</div> <!-- end leftnav -->
+<!-- ending left nav ! -->
+<div id='main'>
+
+<div style="font-size: 6px"> </div>
+<a class="bctl" href="//www.icu-project.org/">ICU</a><span class="bct">  &gt; </span>
+<a class="bctl" href="icudemos">Demo</a><span class="bct">  &gt; </span>
+
+<a class="bctl" href="/icu-bin/convexp?s=ALL">Converter Explorer</a><span class="bct">  &gt; </span>
+
+<h1>ibm-1383_P110-1999</h1>
+<table width="97%" border="0" cellspacing="0" style="margin: 1em 0em 1em 1em">
+<tr><td style="white-space: nowrap">
+<form method="get" action="/icu-bin/convexp">
+<p>Select a standard to view:<br />
+<br />
+
+<input type="hidden" name="conv" value="ibm-1383_P110-1999" checked="checked" />
+<input type="hidden" name="b" value="A8"  checked="checked" />
+<input type="checkbox" name="s" value="UTR22" id="UTR22" /> <label for="UTR22">UTR22</label><br />
+<input type="checkbox" name="s" value="IBM" id="IBM" /> <label for="IBM">IBM</label><br />
+<input type="checkbox" name="s" value="WINDOWS" id="WINDOWS" /> <label for="WINDOWS">WINDOWS</label><br />
+<input type="checkbox" name="s" value="JAVA" id="JAVA" /> <label for="JAVA">JAVA</label><br />
+<input type="checkbox" name="s" value="IANA" id="IANA" /> <label for="IANA">IANA</label><br />
+<input type="checkbox" name="s" value="MIME" id="MIME" /> <label for="MIME">MIME</label><br />
+<input type="checkbox" name="s" value="-" id="UntaggedAliases" /> <label for="UntaggedAliases"><em>Untagged Aliases</em></label><br />
+<input type="checkbox" name="s" value="ALL" id="AllAliases" checked="checked" /> <label for="AllAliases"><em>All Aliases</em></label><br />
+<input type="checkbox" name="ShowUnavailable" value="" id="ShowUnavailable" /> <label for="ShowUnavailable"><em>Show Unavailable Converters</em></label><br />
+<br />
+<input type="submit" value="Show Aliases" />
+</p></form>
+</td>
+<td align="right" valign="top">
+<table cellspacing="0" cellpadding="0" border="0" width="175" class="v14-gray-table-border">
+<tr><th colspan="3" class="v14-header-1-small">Related Topics</th></tr>
+<tr><td colspan="3"><span style="font-size: 5px"> </span></td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/docs/demo/convexp_help.html">Converter Explorer Help</a></td><td width="5"> </td></tr>
+<tr><td align="right" valign="top"> </td><td align="left">&middot; <a href="http://www.icu-project.org/charts/charset/">ICU Charset Information</a></td><td width="5"> </td></tr>
+<tr><td><span style="font-size: 5px"> </span></td></tr>
+</table>
+</td></tr>
+</table>
+<br /><table cellspacing="0" class="data-table-2">
+
+<caption><em>List of Converter Aliases</em></caption>
+<tr><th style="text-align: center">Internal<br />Converter Name</th>
+<th style="text-align: center"><em>All Aliases</em></th>
+</tr>
+<tr>
+<th style="white-space: nowrap">ibm-1383_P110-1999</th>
+<td class="alias">
+ibm-1383_P110-1999<br />
+ibm-1383<br />
+GB2312<br />
+csGB2312<br />
+cp1383<br />
+1383<br />
+EUC-CN<br />
+ibm-eucCN<br />
+hp15CN<br />
+ibm-1383_VPUA</td>
+</tr>
+</table><br /><br />
+<table width="100%" cellspacing="0" class="data-table-2" summary="A 16 by 16 table with headers on each side of the table representing the nibble of a byte.">
+<caption><em><a name="layout"></a>Codepage Layout</em></caption>
+<tr><td colspan="18"><p>Currently showing the codepage starting with the bytes A8</p>
+</td></tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+<tr>
+<th style="text-align: center">00</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">00</th>
+</tr>
+<tr>
+<th style="text-align: center">10</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">10</th>
+</tr>
+<tr>
+<th style="text-align: center">20</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">20</th>
+</tr>
+<tr>
+<th style="text-align: center">30</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">30</th>
+</tr>
+<tr>
+<th style="text-align: center">40</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">40</th>
+</tr>
+<tr>
+<th style="text-align: center">50</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">50</th>
+</tr>
+<tr>
+<th style="text-align: center">60</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">60</th>
+</tr>
+<tr>
+<th style="text-align: center">70</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">70</th>
+</tr>
+<tr>
+<th style="text-align: center">80</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">80</th>
+</tr>
+<tr>
+<th style="text-align: center">90</th>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<td class="reserved"> </td>
+<th style="text-align: center">90</th>
+</tr>
+<tr>
+<th style="text-align: center">A0</th>
+<td class="reserved"> </td>
+<td align="center" title="LATIN SMALL LETTER A WITH MACRON"><div class="glyph">ā</div><span class="small">0101</span></td>
+<td align="center" title="LATIN SMALL LETTER A WITH ACUTE"><div class="glyph">á</div><span class="small">00E1</span></td>
+<td align="center" title="LATIN SMALL LETTER A WITH CARON"><div class="glyph">ǎ</div><span class="small">01CE</span></td>
+<td align="center" title="LATIN SMALL LETTER A WITH GRAVE"><div class="glyph">à</div><span class="small">00E0</span></td>
+<td align="center" title="LATIN SMALL LETTER E WITH MACRON"><div class="glyph">ē</div><span class="small">0113</span></td>
+<td align="center" title="LATIN SMALL LETTER E WITH ACUTE"><div class="glyph">é</div><span class="small">00E9</span></td>
+<td align="center" title="LATIN SMALL LETTER E WITH CARON"><div class="glyph">ě</div><span class="small">011B</span></td>
+<td align="center" title="LATIN SMALL LETTER E WITH GRAVE"><div class="glyph">è</div><span class="small">00E8</span></td>
+<td align="center" title="LATIN SMALL LETTER I WITH MACRON"><div class="glyph">ī</div><span class="small">012B</span></td>
+<td align="center" title="LATIN SMALL LETTER I WITH ACUTE"><div class="glyph">í</div><span class="small">00ED</span></td>
+<td align="center" title="LATIN SMALL LETTER I WITH CARON"><div class="glyph">ǐ</div><span class="small">01D0</span></td>
+<td align="center" title="LATIN SMALL LETTER I WITH GRAVE"><div class="glyph">ì</div><span class="small">00EC</span></td>
+<td align="center" title="LATIN SMALL LETTER O WITH MACRON"><div class="glyph">ō</div><span class="small">014D</span></td>
+<td align="center" title="LATIN SMALL LETTER O WITH ACUTE"><div class="glyph">ó</div><span class="small">00F3</span></td>
+<td align="center" title="LATIN SMALL LETTER O WITH CARON"><div class="glyph">ǒ</div><span class="small">01D2</span></td>
+<th style="text-align: center">A0</th>
+</tr>
+<tr>
+<th style="text-align: center">B0</th>
+<td align="center" title="LATIN SMALL LETTER O WITH GRAVE"><div class="glyph">ò</div><span class="small">00F2</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH MACRON"><div class="glyph">ū</div><span class="small">016B</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH ACUTE"><div class="glyph">ú</div><span class="small">00FA</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH CARON"><div class="glyph">ǔ</div><span class="small">01D4</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH GRAVE"><div class="glyph">ù</div><span class="small">00F9</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH DIAERESIS AND MACRON"><div class="glyph">ǖ</div><span class="small">01D6</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH DIAERESIS AND ACUTE"><div class="glyph">ǘ</div><span class="small">01D8</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH DIAERESIS AND CARON"><div class="glyph">ǚ</div><span class="small">01DA</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH DIAERESIS AND GRAVE"><div class="glyph">ǜ</div><span class="small">01DC</span></td>
+<td align="center" title="LATIN SMALL LETTER U WITH DIAERESIS"><div class="glyph">ü</div><span class="small">00FC</span></td>
+<td align="center" title="LATIN SMALL LETTER E WITH CIRCUMFLEX"><div class="glyph">ê</div><span class="small">00EA</span></td>
+<td align="center" title="<private use area-E073>"><div class="glyph"></div><span class="small">E073</span></td>
+<td align="center" title="<private use area-E074>"><div class="glyph"></div><span class="small">E074</span></td>
+<td align="center" title="<private use area-E075>"><div class="glyph"></div><span class="small">E075</span></td>
+<td align="center" title="<private use area-E076>"><div class="glyph"></div><span class="small">E076</span></td>
+<td align="center" title="<private use area-E077>"><div class="glyph"></div><span class="small">E077</span></td>
+<th style="text-align: center">B0</th>
+</tr>
+<tr>
+<th style="text-align: center">C0</th>
+<td align="center" title="<private use area-E078>"><div class="glyph"></div><span class="small">E078</span></td>
+<td align="center" title="<private use area-E079>"><div class="glyph"></div><span class="small">E079</span></td>
+<td align="center" title="<private use area-E07A>"><div class="glyph"></div><span class="small">E07A</span></td>
+<td align="center" title="<private use area-E07B>"><div class="glyph"></div><span class="small">E07B</span></td>
+<td align="center" title="<private use area-E07C>"><div class="glyph"></div><span class="small">E07C</span></td>
+<td align="center" title="BOPOMOFO LETTER B"><div class="glyph">ㄅ</div><span class="small">3105</span></td>
+<td align="center" title="BOPOMOFO LETTER P"><div class="glyph">ㄆ</div><span class="small">3106</span></td>
+<td align="center" title="BOPOMOFO LETTER M"><div class="glyph">ㄇ</div><span class="small">3107</span></td>
+<td align="center" title="BOPOMOFO LETTER F"><div class="glyph">ㄈ</div><span class="small">3108</span></td>
+<td align="center" title="BOPOMOFO LETTER D"><div class="glyph">ㄉ</div><span class="small">3109</span></td>
+<td align="center" title="BOPOMOFO LETTER T"><div class="glyph">ㄊ</div><span class="small">310A</span></td>
+<td align="center" title="BOPOMOFO LETTER N"><div class="glyph">ㄋ</div><span class="small">310B</span></td>
+<td align="center" title="BOPOMOFO LETTER L"><div class="glyph">ㄌ</div><span class="small">310C</span></td>
+<td align="center" title="BOPOMOFO LETTER G"><div class="glyph">ㄍ</div><span class="small">310D</span></td>
+<td align="center" title="BOPOMOFO LETTER K"><div class="glyph">ㄎ</div><span class="small">310E</span></td>
+<td align="center" title="BOPOMOFO LETTER H"><div class="glyph">ㄏ</div><span class="small">310F</span></td>
+<th style="text-align: center">C0</th>
+</tr>
+<tr>
+<th style="text-align: center">D0</th>
+<td align="center" title="BOPOMOFO LETTER J"><div class="glyph">ㄐ</div><span class="small">3110</span></td>
+<td align="center" title="BOPOMOFO LETTER Q"><div class="glyph">ㄑ</div><span class="small">3111</span></td>
+<td align="center" title="BOPOMOFO LETTER X"><div class="glyph">ㄒ</div><span class="small">3112</span></td>
+<td align="center" title="BOPOMOFO LETTER ZH"><div class="glyph">ㄓ</div><span class="small">3113</span></td>
+<td align="center" title="BOPOMOFO LETTER CH"><div class="glyph">ㄔ</div><span class="small">3114</span></td>
+<td align="center" title="BOPOMOFO LETTER SH"><div class="glyph">ㄕ</div><span class="small">3115</span></td>
+<td align="center" title="BOPOMOFO LETTER R"><div class="glyph">ㄖ</div><span class="small">3116</span></td>
+<td align="center" title="BOPOMOFO LETTER Z"><div class="glyph">ㄗ</div><span class="small">3117</span></td>
+<td align="center" title="BOPOMOFO LETTER C"><div class="glyph">ㄘ</div><span class="small">3118</span></td>
+<td align="center" title="BOPOMOFO LETTER S"><div class="glyph">ㄙ</div><span class="small">3119</span></td>
+<td align="center" title="BOPOMOFO LETTER A"><div class="glyph">ㄚ</div><span class="small">311A</span></td>
+<td align="center" title="BOPOMOFO LETTER O"><div class="glyph">ㄛ</div><span class="small">311B</span></td>
+<td align="center" title="BOPOMOFO LETTER E"><div class="glyph">ㄜ</div><span class="small">311C</span></td>
+<td align="center" title="BOPOMOFO LETTER EH"><div class="glyph">ㄝ</div><span class="small">311D</span></td>
+<td align="center" title="BOPOMOFO LETTER AI"><div class="glyph">ㄞ</div><span class="small">311E</span></td>
+<td align="center" title="BOPOMOFO LETTER EI"><div class="glyph">ㄟ</div><span class="small">311F</span></td>
+<th style="text-align: center">D0</th>
+</tr>
+<tr>
+<th style="text-align: center">E0</th>
+<td align="center" title="BOPOMOFO LETTER AU"><div class="glyph">ㄠ</div><span class="small">3120</span></td>
+<td align="center" title="BOPOMOFO LETTER OU"><div class="glyph">ㄡ</div><span class="small">3121</span></td>
+<td align="center" title="BOPOMOFO LETTER AN"><div class="glyph">ㄢ</div><span class="small">3122</span></td>
+<td align="center" title="BOPOMOFO LETTER EN"><div class="glyph">ㄣ</div><span class="small">3123</span></td>
+<td align="center" title="BOPOMOFO LETTER ANG"><div class="glyph">ㄤ</div><span class="small">3124</span></td>
+<td align="center" title="BOPOMOFO LETTER ENG"><div class="glyph">ㄥ</div><span class="small">3125</span></td>
+<td align="center" title="BOPOMOFO LETTER ER"><div class="glyph">ㄦ</div><span class="small">3126</span></td>
+<td align="center" title="BOPOMOFO LETTER I"><div class="glyph">ㄧ</div><span class="small">3127</span></td>
+<td align="center" title="BOPOMOFO LETTER U"><div class="glyph">ㄨ</div><span class="small">3128</span></td>
+<td align="center" title="BOPOMOFO LETTER IU"><div class="glyph">ㄩ</div><span class="small">3129</span></td>
+<td align="center" title="<private use area-E07D>"><div class="glyph"></div><span class="small">E07D</span></td>
+<td align="center" title="<private use area-E07E>"><div class="glyph"></div><span class="small">E07E</span></td>
+<td align="center" title="<private use area-E07F>"><div class="glyph"></div><span class="small">E07F</span></td>
+<td align="center" title="<private use area-E080>"><div class="glyph"></div><span class="small">E080</span></td>
+<td align="center" title="<private use area-E081>"><div class="glyph"></div><span class="small">E081</span></td>
+<td align="center" title="<private use area-E082>"><div class="glyph"></div><span class="small">E082</span></td>
+<th style="text-align: center">E0</th>
+</tr>
+<tr>
+<th style="text-align: center">F0</th>
+<td align="center" title="<private use area-E083>"><div class="glyph"></div><span class="small">E083</span></td>
+<td align="center" title="<private use area-E084>"><div class="glyph"></div><span class="small">E084</span></td>
+<td align="center" title="<private use area-E085>"><div class="glyph"></div><span class="small">E085</span></td>
+<td align="center" title="<private use area-E086>"><div class="glyph"></div><span class="small">E086</span></td>
+<td align="center" title="<private use area-E087>"><div class="glyph"></div><span class="small">E087</span></td>
+<td align="center" title="<private use area-E088>"><div class="glyph"></div><span class="small">E088</span></td>
+<td align="center" title="<private use area-E089>"><div class="glyph"></div><span class="small">E089</span></td>
+<td align="center" title="<private use area-E08A>"><div class="glyph"></div><span class="small">E08A</span></td>
+<td align="center" title="<private use area-E08B>"><div class="glyph"></div><span class="small">E08B</span></td>
+<td align="center" title="<private use area-E08C>"><div class="glyph"></div><span class="small">E08C</span></td>
+<td align="center" title="<private use area-E08D>"><div class="glyph"></div><span class="small">E08D</span></td>
+<td align="center" title="<private use area-E08E>"><div class="glyph"></div><span class="small">E08E</span></td>
+<td align="center" title="<private use area-E08F>"><div class="glyph"></div><span class="small">E08F</span></td>
+<td align="center" title="<private use area-E090>"><div class="glyph"></div><span class="small">E090</span></td>
+<td align="center" title="<private use area-E091>"><div class="glyph"></div><span class="small">E091</span></td>
+<td class="reserved"> </td>
+<th style="text-align: center">F0</th>
+</tr>
+<tr><td style="text-align: center"> </td>
+<th style="text-align: center">00</th><th style="text-align: center">01</th><th style="text-align: center">02</th><th style="text-align: center">03</th><th style="text-align: center">04</th><th style="text-align: center">05</th><th style="text-align: center">06</th><th style="text-align: center">07</th><th style="text-align: center">08</th><th style="text-align: center">09</th><th style="text-align: center">0A</th><th style="text-align: center">0B</th><th style="text-align: center">0C</th><th style="text-align: center">0D</th><th style="text-align: center">0E</th><th style="text-align: center">0F</th><td style="text-align: center"> </td></tr>
+</table>
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em>Information About This Converter</em></caption>
+
+<tr><th>Type of converter</th><td>UCNV_MBCS</td></tr>
+<tr><th>Minimum number of bytes per UChar</th><td>1</td></tr>
+<tr><th>Maximum number of bytes per UChar</th><td>2</td></tr>
+<tr><th>Substitution character</th><td>\xA1\xA1</td></tr>
+<tr><th>Starter bytes</th><td>[\xA1-\xFE]</td></tr>
+<tr><th>Is ASCII [\x20-\x7E] compatible?</th><td>TRUE</td></tr>
+<tr><th>Is ASCII [\u0020-\u007E] ambiguous?</th><td>FALSE</td></tr>
+<tr><th>Contains ambiguous aliases?</th><td>FALSE</td></tr>
+<tr><th>Always generates Unicode NFC?</th><td>TRUE</td></tr>
+<tr><th>Contains BiDi characters?</th><td>FALSE</td></tr>
+</table>
+<br /><table border="0" cellpadding="0" cellspacing="0" class="data-table-1">
+
+<caption><em><a name="ShowLocales"></a>List of Languages Representable By This Codepage</em></caption>
+
+<tr><td><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowLocales&amp;s=ALL#ShowLocales">View Complete Set...</a></td></tr>
+</table><br /><h2><a name="ShowSet"></a>Set of Unicode Characters Representable By This Codepage</h2>
+<p><a href="/icu-bin/convexp?conv=ibm-1383_P110-1999&amp;ShowSet&amp;s=ALL#ShowSet">View Complete Set...</a></p>
+</div><!-- end main content -->
+
+<!-- © 2016 and later: Unicode, Inc. and others.
+    License & terms of use: http://www.unicode.org/copyright.html
+    Copyright (C) 2006, IBM and others. All Rights Reserved.  -->
+<!-- common footer -->
+<!-- end common footer -->
+</body>
+</html>
+
