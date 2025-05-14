@@ -6,6 +6,7 @@ use crate::decode_block::DecodeBlock;
 
 mod charset;
 mod decode_block;
+mod charsets;
 
 #[cfg(test)]
 mod tests;
