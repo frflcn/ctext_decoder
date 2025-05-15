@@ -2,4 +2,11 @@
 name = "x11text_decoder"
 version = "0.1.0"
 edition = "2024"
+description = "A crate to decode x11's COMPOUND_TEXT"
 readme = "README.md"
+repository = "https://github.com/frflcn/x11text_decoder"
+documentation = "https://docs.rs/x11text_decoder/"
+homepage = "https://docs.rs/x11text_decoder/"
+keywords = ["x11", "compound_text", "compound", "text", "decode"]
+categories = ["encoding", "text-processing"]
+exclude = ["/src/charsets/create_charsets"]
