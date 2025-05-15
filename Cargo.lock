@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "ctext_decoder"
+name = "x11text_decoder"
 version = "0.1.0"

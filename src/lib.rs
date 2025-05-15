@@ -1,4 +1,4 @@
-//! # CTEXT_DECODER
+//! # X11TEXT_DECODER
 //!
 //! Is a simple library whose sole purpose is to decode x11's COMPOUND_TEXT type into UTF-8. 
 //! It has a single function: decode_with_replacement, which will attempt to decode a COMPUND_TEXT and if it finds any weird escape sequences or 
