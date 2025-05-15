@@ -1,9 +1,11 @@
 //! # CTEXT_DECODER
 //!
-//! Better known as compound text decoder. Is a simple library whose sole purpose is to decode x11's COMPOUND_TEXT string type. 
+//! Is a simple library whose sole purpose is to decode x11's COMPOUND_TEXT type into UTF-8. 
 //! It has a single function: decode_with_replacement, which will attempt to decode a COMPUND_TEXT and if it finds any weird escape sequences or 
-//! strange characters given the current state of the encoding, it will add the Unicode Replacement Character and continue on decoding. It
+//! strange characters given the current state of the encoding, it will add the Unicode Replacement Character and continue decoding. It
 //! returns a DecodeWithReplacementResult which contains the decoded string and a boolean indicating whether or not any replacement characters were added.
+//! 
+//! Since the default encoding for COMPOUND_TEXT is latin-1 and x11's STRING type is latin-1. This crate can also be used to decode x11's STRING type.
 
 use std::char::REPLACEMENT_CHARACTER;
 
@@ -64,13 +66,18 @@ const KS_C5601: u8 = 67;
 const UTF8_STANDARD_RETURN: u8 = 71;
 const STANDARD_RETURN: u8 = 64;
 
+/// Contains the decoded string and a boolean indicating whether or not the Replacement Character
+/// was added to the string.
 pub struct DecodeWithReplacementResult {
     pub text: String,
     pub replacement_added: bool
 }
 
 
-
+/// Decodes the supplied bytes into UTF-8 and returns a DecodeWithReplacementResult. The DecodeWithReplacementResult
+/// contains the decoded text and a boolean indicating whether or not the Replacement Character was added.
+/// This function will add the Replacement Character if any weird escape sequences are found or strange characters are 
+/// found given the state of the encoding.
 pub fn decode_with_replacement(bytes: &Vec<u8>) -> DecodeWithReplacementResult {
 
     let mut decode_block = DecodeBlock::new();
